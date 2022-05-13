@@ -16,7 +16,8 @@ export const useUserStore = defineStore({
     state: (): IUserState => {
         return {
             token: getToken() || "",
-            roles: []
+            roles: [],
+
         }
     },
     actions: {
@@ -32,7 +33,7 @@ export const useUserStore = defineStore({
                     password: userInfo.password
                 })
                     .then((res: any) => {
-                        console.log('res.result.token',res.result.token)
+                        // console.log('res.result.token', res.result.token)
                         setToken(res.result.token)
                         this.token = res.result.token
                         resolve(true)
@@ -45,12 +46,14 @@ export const useUserStore = defineStore({
         /** 获取用户详情 */
         getInfo() {
             return new Promise((resolve, reject) => {
-                userInfoRequest()
+                console.log('token: ', this.token)
+                userInfoRequest(this.token)
                     .then((res: any) => {
-                        this.roles = res.data.user.roles
+                        this.roles = res.result.permission.split(';')
+                        // this.roles = res.data.user.roles
                         resolve(res)
                     })
-                    .catch((error) => {
+                    .catch((error: any) => {
                         reject(error)
                     })
             })

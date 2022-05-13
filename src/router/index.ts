@@ -132,6 +132,23 @@ export const constantRoutes: Array<RouteRecordRaw> = [
         }
       }
     ]
+  },
+  {
+    path: "/job",
+    component: Layout,
+    redirect: "/jobListInfo",
+    children: [
+      {
+        path: "jobListInfo",
+        component: () => import("@/views/jobList/index.vue"),
+        name: "jobInfo",
+        meta: {
+          title: "职位列表",
+          icon: "dashboard",
+          affix: true
+        }
+      }
+    ]
   }
 ]
 

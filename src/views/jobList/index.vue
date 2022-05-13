@@ -234,6 +234,7 @@ const handleDelete = (index: number, row: { number: any; announcerId: number }) 
   let temp = ref({id: row.announcerId, number: row.number})
   handleDel(temp) //删除操作,获取数据
 
+  console.log('arr', arr)
   ConvertToFrontData(arr) //转换为前端数据
 }
 
@@ -246,7 +247,7 @@ async function handleDel(param: {}) {
 }
 
 async function InitialTableData() {
-  const data = await postJsonRequest("/userInfo/getUserInfo", {});
+  const data = await postJsonRequest("/jobList/getJobList", {});
   const arr = data.result //获取数据
   console.log(arr)
   // tableData.length = 0  //响应式数组清空

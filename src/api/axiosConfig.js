@@ -81,7 +81,6 @@ jsonInstance.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 jsonInstance.defaults.transformRequest = [
     data => {
         // 转换成json格式 可对应后端的 @RequestBody
-
         return JSON.stringify(data)
     }
 ]

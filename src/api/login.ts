@@ -23,9 +23,12 @@ export function accountLogin(data: { account: string; password: string }) {
 }
 
 /** 获取用户详情 */
-export function userInfoRequest() {
-    return request({
-        url: "/api/permission/getUserRankById",
-        method: "post",
-    })
+export function userInfoRequest(token: string) {
+    let result = postRequest("/permission/getUserRankByToken", {token: token});
+    console.log('userInfoRequest:', result);
+    return result
+    // return request({
+    //     url: "/api/permission/getUserRankById",
+    //     method: "post",
+    // })
 }
