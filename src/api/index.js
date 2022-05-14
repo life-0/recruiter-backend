@@ -1,3 +1,4 @@
+// @ts-ignore
 import api from "./axiosConfig"
 
 export const getRequest = (url) => api.get("/api" + url)

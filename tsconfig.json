@@ -14,7 +14,7 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     /** https://vitejs.cn/guide/features.html#typescript-compiler-options */
-    "isolatedModules": true,
+    "isolatedModules": false, //将没有导入/导出的文件视为旧脚本文件。这样的文件不是模块，它们的任何定义都已合并到全局名称空间中。 isolatedModules禁止此类文件。
     "esModuleInterop": true,
     "lib": [
       "esnext",
