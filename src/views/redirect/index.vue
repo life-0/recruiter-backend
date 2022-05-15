@@ -12,7 +12,4 @@ useRouter()
 </script>
 
 <template>
-  <div>
-    <p>数据测试</p>
-  </div>
 </template>

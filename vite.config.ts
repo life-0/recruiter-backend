@@ -29,6 +29,8 @@ export default (): UserConfigExport => {
       cors: true,
       /** 端口被占用时，是否直接退出 */
       strictPort: false,
+      // /** 设置热更新*/
+      // hmr:true,
       /** 接口代理 */
       // 代理
       proxy: {

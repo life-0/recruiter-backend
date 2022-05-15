@@ -1,5 +1,5 @@
 import { createApp, Directive } from "vue"
-import router from "./router"
+import router from "./router/index"
 import "@/router/permission"
 import store from "./store"
 import App from "./App.vue"

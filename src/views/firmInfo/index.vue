@@ -1,11 +1,369 @@
 <template>
+  <div>
+    <!--职位展示-->
+    <el-scrollbar height="500px">
+      <el-table :data="filterTableData" style="width: 100%">
+        <el-table-column type="expand">
+          <template #default="props">
 
+            <!--企业信息框-->
+            <el-row style="display: flex;
+        flex-wrap: wrap; justify-content: center;padding: 10px 0;
+        border: 1px solid #dadada;box-shadow: 0 0 10px #e8e5e5;">
+              <!--个人框 end-->
+              <!--个人头像行-->
+              <el-col :span="8">
+                <!--头像-->
+                <img :src="props.row.firmAvatar" style="
+                  width: 88px;height: 88px;
+                  background: #ffffff;
+                  border:  1px #a5a7a8;
+                  transition: 0.3s;float: left;
+                  margin-top: 5px;
+                  " alt="..."/>
+              </el-col>
+              <!--个人姓名行-->
+              <el-col :span="14" style="color: #333">
+                <!--个人姓名-->
+
+                <div style="font-size: 20px;
+
+                            padding: 9px">
+                  {{ props.row.firmName }}
+                </div>
+                <!--公司官网链接-->
+                <div style="margin-top: 15px">
+                  <div style="">
+                    企业官网:
+                    <a :href="props.row.officialUrl"
+                       style=" display: inline-block;vertical-align: bottom;text-decoration:none;color: #6babda;white-space: nowrap;  overflow: hidden;
+                              text-overflow: ellipsis;width: 50%">{{ props.row.officialUrl }}</a>
+                  </div>
+                </div>
+                <!--公司官网链接 end-->
+              </el-col>
+            </el-row>
+            <el-row style=" display: flex;
+        flex-wrap: wrap; justify-content: center;padding: 10px 0;
+        border: 1px solid #dadada;box-shadow: 0 0 10px #e8e5e5;">
+              <el-col :span="22">
+                <div style="font-size: 18px;color: #333;letter-spacing: 1.21px;">
+                  企业基本信息:
+                  <!--                  <span style="font-size: 16px;;float:right;margin-right: 10px"-->
+                  <!--                        @click="toggleDialog()">-->
+                  <!--            编辑-->
+                  <!--            <el-icon><i-edit/></el-icon></span>-->
+                  <ul class="wanna-title__list" style="display: flex;
+                                    flex-wrap: wrap; justify-content: center;  overflow: hidden; list-style: none; ">
+                    <li class="wanna-title__item" style="float: left;font-size: 14px; width: 50%;
+                                          color: #666; line-height: 24px;margin-top: 10px">
+                      融资规模:
+                      <span>{{ props.row.financingScale }}</span></li>
+                    <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
+                                          color: #666; line-height: 24px;margin-top: 10px">
+                      企业人数:
+                      <span>{{ props.row.firmNumber }}</span></li>
+                    <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
+                                          color: #666; line-height: 24px;margin-top: 10px">
+                      企业领域:
+                      <span>{{ props.row.field }}</span></li>
+                    <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
+                                          color: #666; line-height: 24px;margin-top: 10px">
+                      成立时间:
+                      <span>{{ props.row.established }}</span></li>
+                    <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
+                                          color: #666; line-height: 24px;margin-top: 10px">
+                      法人代表:
+                      <span>{{ props.row.legalPerson }}</span></li>
+                    <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
+                                          color: #666; line-height: 24px;margin-top: 10px">
+                      注册资本:
+                      <span>{{ props.row.registeredCapital }}</span></li>
+
+                    <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
+                                          color: #666; line-height: 24px;margin-top: 10px">
+                      企业地址:
+                      <span>{{ props.row.address }}</span></li>
+                    <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
+                                          color: #666; line-height: 24px;margin-top: 10px">
+                      企业性质:
+                      <span>{{ props.row.organizationType }}</span></li>
+                    <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 100%;
+                                          color: #666; line-height: 24px;margin-top: 10px">
+                      企业信息:
+                      <span>  <a :href="props.row.officialUrl"
+                                 style=" display: inline-block;vertical-align: bottom;text-decoration:none;color: #6babda;
+                           white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;width: 50%">
+                  {{ props.row.infoUrl }}</a></span></li>
+                    <li class="wanna-title__item" style="float: left; ;font-size: 14px;width: 100%;
+               white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;
+                                          color: #666; line-height: 24px;margin-top: 10px">
+                      企业福利:
+                      <template v-for="(item,index) in props.row.welfare ">
+                        <span>{{ item }}</span>
+                        <span v-if="index!== props.row.welfare .length-1">, </span>
+                      </template>
+                    </li>
+                  </ul>
+                </div>
+              </el-col>
+              <el-col :span="22" style="margin-top: 15px;">
+                <div style="font-size: 18px;color: #333;letter-spacing: 1.21px;">
+                  企业介绍:
+                </div>
+                <div v-html="props.row.introduction" style="overflow: hidden;
+                      text-overflow: ellipsis;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 7;margin-top: 10px;
+                      -webkit-box-orient: vertical;white-space: pre-wrap">
+                </div>
+              </el-col>
+            </el-row>
+            <!--企业信息框 end-->
+          </template>
+        </el-table-column>
+        <el-table-column label="公司ID" prop="firmId"/>
+        <el-table-column label="number" prop="number"/>
+        <el-table-column label="公司名" prop="firmName"/>
+        <el-table-column label="目前状态" prop="state">
+          <template #default="scope">
+            <span v-if='scope.row.state'>目前可用</span>
+            <span v-else>已失效</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="right" style="">
+          <template #header>
+            <el-input v-model="search" size="default" placeholder="数据搜索"/>
+          </template>
+          <template #default="scope">
+            <!--            <el-button size="default" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
+            <!--            <el-button size="default" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>-->
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-scrollbar>
+    <!--职位展示 end-->
+    <!--分页-->
+    <el-row>
+      <div class="demo-pagination-block">
+        <el-pagination
+            v-model:currentPage="currentPage"
+            v-model:page-size="pageSize"
+            :pager-count="pagerCount"
+            :disabled="disabled"
+            :background="background"
+            hide-on-single-page
+            layout="prev, pager, next, jumper"
+            :total="totalSize"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+        />
+      </div>
+    </el-row>
+    <!--分页 end-->
+    <!--修改组件-->
+    <div>
+      <el-dialog
+          v-model="dialogVisible"
+          title="编辑组件">
+        <!--编辑表单-->
+        <el-form :model="form" :inline="true" class="demo-form-inline">
+          <el-form-item>
+            <el-col :span="11" style="margin-bottom: 10px">
+              <label style="width:65px;margin-right: 5px">职位 :</label>
+              <el-input v-model="form.position" style="width: auto"/>
+            </el-col>
+            <el-col :span="11" style="margin-bottom: 10px">
+              <label style="width:65px;margin-right: 5px">公司地址 :</label>
+              <el-input v-model="form.address" style="width: auto"/>
+            </el-col>
+            <el-col :span="16" style="margin-bottom: 10px">
+              <label style="width:65px;margin-right: 5px">薪资 :</label>
+              <el-input v-model="form.salary[0]" style="width: 26%"/>
+              <span class="text-gray-500"> -- </span>
+              <el-input v-model="form.salary[1]" style="width: 26%"/>
+              <span class="text-gray-500"> / 月</span>
+            </el-col>
+            <el-col :span="6" style="margin-bottom: 10px"></el-col>
+            <el-col :span="6" style="margin-bottom: 10px">
+              <label style="width:65px;margin-right: 5px">需求人数 :</label>
+              <el-input v-model="form.requireCount" style="width: 30%"/>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 10px">
+              <label style="width:100px;margin-right: 5px">目前申请人数 :</label>
+              <span>{{ form.requireCount }}</span>
+            </el-col>
+            <el-col :span="8" style="margin-bottom: 10px">
+              <label style="width:65px;margin-right: 5px">是否发布 :</label>
+              <el-radio-group v-model="form.state">
+                <el-radio :label=true>是</el-radio>
+                <el-radio :label=false>否</el-radio>
+              </el-radio-group>
+            </el-col>
+          </el-form-item>
+          <el-form-item style="width: 100%">
+            <el-col :span="23" style="margin-bottom: 10px">
+              <label style="width:65px;margin-right: 5px">应聘条件 :</label>
+              <el-input
+                  v-model="form.applicationConditions"
+                  :autosize="{ minRows: 4, maxRows: 8}"
+                  type="textarea"
+                  placeholder="Please input"
+              />
+            </el-col>
+
+          </el-form-item>
+
+          <el-form-item style="width: 98%">
+            <el-col :span="23" style="display: flex; flex-wrap: wrap; justify-content: center;">
+              <el-button @click="toggleDialog">取消</el-button>
+              <el-button type="primary" @click="submit">提交</el-button>
+            </el-col>
+          </el-form-item>
+        </el-form>
+        <!--编辑表单 end-->
+
+      </el-dialog>
+    </div>
+    <!--修改组件 end-->
+  </div>
 </template>
 
 <script setup lang="ts">
 
+
+import {computed, onMounted, reactive, ref} from 'vue'
+import {postJsonRequest, postRequest} from "@/api";
+import dayjs from "dayjs";
+import {ElNotification} from "element-plus";
+
+
+interface firmInfo {
+  address: string
+  createTime: Date
+  established: Date
+  field: string
+  financingScale: string
+  firmAvatar: string
+  firmId: number
+  firmName: string
+  firmNumber: number
+  infoUrl: string
+  introduction: string
+  legalPerson: string
+  number: string
+  officialUrl: string
+  organizationType: string
+  registeredCapital: string
+  state: boolean
+  updateTime: Date
+  welfare: string[]
+}
+
+
+const currentPage = ref(1)  //当前页
+const pageSize = ref(7) //每页显示条目个数
+const background = ref(true)  //打开背景色
+const disabled = ref(false) //分页是否禁用
+const totalSize = 100;  // 总条目数
+const pagerCount = 5  //显示按钮个数
+const handleSizeChange = (val: number) => {
+  console.log(`${val}`, ' items per page')
+}
+const handleCurrentChange = (val: number) => {
+  console.log(`current page: ${val}`)
+}
+
+const dialogVisible = ref(false)  //对话框默认不显示
+// const id = store.state.user.profile.id  //获取id
+let form = reactive<firmInfo>({
+  address: "",
+  createTime: new Date,
+  established: new Date(),
+  field: "",
+  financingScale: "",
+  firmAvatar: "",
+  firmId: 0,
+  firmName: "",
+  firmNumber: 0,
+  infoUrl: "",
+  introduction: "",
+  legalPerson: "",
+  number: "",
+  officialUrl: "",
+  organizationType: "",
+  registeredCapital: "",
+  state: true,
+  updateTime: new Date(),
+  welfare: ['']
+})  //临时表单
+const search = ref('')
+let tableData: firmInfo[] = reactive([])
+let URL = ref<string>('')
+//数据过滤集
+const filterTableData = computed(() =>
+    tableData.filter(
+        (data) => {
+          // return !search.value || data.name.toLowerCase().includes(search.value.toLowerCase())
+          return !search.value || JSON.stringify(data).toLowerCase().includes(search.value.toLowerCase())
+        }
+    )
+)
+
+/*修改组件显示方法*/
+function toggleDialog() {
+  dialogVisible.value = !dialogVisible.value;
+}
+
+
+//转换为前端数据
+function ConvertToFrontData(arr: any) {
+  tableData.length = 0  //响应式数组清空, 必须这样才能清空,否则tableData会失去响应式
+  // console.log('ConvertToFrontDataArr', arr)
+  arr.forEach((value: any) => {
+    value.updateTime = new Date(value.updateTime)
+    value.createTime = new Date(value.createTime)
+    value.welfare = value.welfare.split(",")
+    // console.log('arrKey', value)
+  })
+
+  tableData.push(...arr)
+}
+
+const userInfoStateDialogVisible = ref(false)
+
+function toggleUserInfoSateDialog() {
+  userInfoStateDialogVisible.value = !userInfoStateDialogVisible.value
+}
+
+
+//初始化数据
+async function InitialTableData() {
+  const data = await postJsonRequest("/firm/getFirmInfo", {});
+  const arr = data.result //获取数据
+  console.log(arr)
+  // tableData.length = 0  //响应式数组清空
+  ConvertToFrontData(arr)
+}
+
+
+onMounted(() => {
+  InitialTableData()
+})
+
+//通知结果
+function notification(title: string, message: string) {
+  ElNotification({
+    title: title,
+    dangerouslyUseHTMLString: true,
+    message: message,
+    duration: 3000
+  })
+}
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
+:deep(.cell) {
+  padding: 10px;
+}
 </style>

@@ -13,7 +13,7 @@
                 <div style="font-size: 18px;color: #333;letter-spacing: 1.21px;">
                   目前状态:
                   <span style="font-size: 16px;;float:right;margin-right: 10px"
-                        @click="toggleDialog('userVisible')">
+                        ><!--@click="toggleDialog('userVisible')"-->
             编辑
             <el-icon><i-edit/></el-icon></span>
                   <ul class="wanna-title__list" style="display: flex;
@@ -211,10 +211,10 @@
     <!-- 设置用户状态组件-->
     <el-dialog v-model="userInfoStateDialogVisible" title="评估框" width="30%" center>
 
-        <el-radio-group v-model="userState.state" style="display: flex;  flex-wrap: wrap; justify-content: center;">
-          <el-radio :label=true>目前可用</el-radio>
-          <el-radio :label=false>设为失效</el-radio>
-        </el-radio-group>
+      <el-radio-group v-model="userState.state" style="display: flex;  flex-wrap: wrap; justify-content: center;">
+        <el-radio :label=true>目前可用</el-radio>
+        <el-radio :label=false>设为失效</el-radio>
+      </el-radio-group>
 
 
       <template #footer>
@@ -231,6 +231,7 @@
 <script setup lang="ts">
 import OfflineResumeDialog from './offlineResumeDialog.vue'
 import OnlineResumeDialog from './onlineResumeDialog.vue'
+
 import {computed, onMounted, reactive, ref} from 'vue'
 import {postJsonRequest, postRequest} from "@/api";
 import dayjs from "dayjs";
@@ -435,21 +436,28 @@ function toggleUserInfoSateDialog() {
 
 //用户状态
 let userState = reactive({
-  id:0,
-  state:true
+  id: 0,
+  state: true
 })
 
 function handleEditState(index: number, row: userInfo) {
   toggleUserInfoSateDialog()
   // console.log('row', row)
-  userState.id= row.id
-  userState.state= row.state
+  userState.id = row.id
+  userState.state = row.state
 
 }
-async function submitUserInfoResult(){
+
+async function submitUserInfoResult() {
   console.log(userState)
-  const data = await postJsonRequest("/userInfo/updateUserInfo",userState)
-  console.log('data',  data.result[0])
+  const data = await postJsonRequest("/userInfo/updateUserInfo", userState)
+  const result = data.result[0]
+  console.log('data', data.result[0])
+  tableData.forEach(value => {
+    if (value.userInfo.id === result.id) {
+      value.userInfo.state=result.state
+    }
+  })
 
 }
 
