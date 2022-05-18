@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--职位展示-->
-    <el-scrollbar height="500px">
+    <el-scrollbar height="580px">
       <el-table :data="filterTableData" style="width: 100%">
         <el-table-column type="expand">
           <template #default="props">
@@ -37,7 +37,7 @@
     <!--职位展示 end-->
     <!--分页-->
     <el-row>
-      <div class="demo-pagination-block">
+      <div class="demo-pagination-block" style="width: 100%;display: flex; flex-wrap: wrap; justify-content: center;">
         <el-pagination
             v-model:currentPage="currentPage"
             v-model:page-size="pageSize"

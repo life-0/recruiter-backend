@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--职位展示-->
-    <el-scrollbar height="500px">
+    <el-scrollbar height="580px">
       <el-table :data="filterTableData" style="width: 100%">
         <el-table-column type="expand">
           <template #default="props">
@@ -136,6 +136,7 @@
             <el-input v-model="search" size="default" placeholder="数据搜索"/>
           </template>
           <template #default="scope">
+            <el-button size="default" @click="handleEditState(scope.$index, scope.row)">状态设置</el-button>
             <!--            <el-button size="default" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
             <!--            <el-button size="default" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>-->
           </template>
@@ -145,7 +146,7 @@
     <!--职位展示 end-->
     <!--分页-->
     <el-row>
-      <div class="demo-pagination-block">
+      <div class="demo-pagination-block" style="width: 100%;display: flex; flex-wrap: wrap; justify-content: center;">
         <el-pagination
             v-model:currentPage="currentPage"
             v-model:page-size="pageSize"
@@ -226,6 +227,23 @@
       </el-dialog>
     </div>
     <!--修改组件 end-->
+    <!-- 设置企业状态组件-->
+    <el-dialog v-model="firmInfoStateDialogVisible" title="评估框" width="30%" center>
+
+      <el-radio-group v-model="userState.state" style="display: flex;  flex-wrap: wrap; justify-content: center;">
+        <el-radio :label=true>目前可用</el-radio>
+        <el-radio :label=false>设为失效</el-radio>
+      </el-radio-group>
+
+
+      <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="toggleFirmInfoSateDialog">取消</el-button>
+        <el-button type="primary" @click="submitUserInfoResult">确认</el-button>
+      </span>
+      </template>
+    </el-dialog>
+    <!--设置企业状态组件 end-->
   </div>
 </template>
 
@@ -330,10 +348,35 @@ function ConvertToFrontData(arr: any) {
   tableData.push(...arr)
 }
 
-const userInfoStateDialogVisible = ref(false)
+const firmInfoStateDialogVisible = ref(false)
 
-function toggleUserInfoSateDialog() {
-  userInfoStateDialogVisible.value = !userInfoStateDialogVisible.value
+function toggleFirmInfoSateDialog() {
+  firmInfoStateDialogVisible.value = !firmInfoStateDialogVisible.value
+}
+
+//用户状态
+let userState = reactive({
+  firmId: 0,
+  state: true
+})
+
+function handleEditState(index: number, row: firmInfo) {
+  toggleFirmInfoSateDialog()
+  // console.log('row', row)
+  userState.firmId = row.firmId
+  userState.state = row.state
+}
+async function submitUserInfoResult() {
+  console.log(userState)
+  const data = await postJsonRequest("/firm/updateFirmInfo", userState)
+  const result = data.result
+  console.log('data', data.result)
+  tableData.forEach(value => {
+    if (value.firmId === result.firmId) {
+      value.state=result.state
+    }
+  })
+  toggleFirmInfoSateDialog()
 }
 
 

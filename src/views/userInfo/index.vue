@@ -197,7 +197,8 @@
         />
       </div>
     </el-row>
-    <!--分页 end-->    <!--在线简历展示组件-->
+    <!--分页 end-->
+    <!--在线简历展示组件-->
     <div>
       <OnlineResumeDialog v-model:resumeInfo="form" ref="openOnlineResumeDialogRef"></OnlineResumeDialog>
     </div>
@@ -458,7 +459,7 @@ async function submitUserInfoResult() {
       value.userInfo.state=result.state
     }
   })
-
+  toggleUserInfoSateDialog()
 }
 
 //初始化数据
