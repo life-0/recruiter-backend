@@ -2,20 +2,37 @@
   <div>
     <!--职位展示-->
     <el-scrollbar height="580px">
-      <el-table :data="filterTableData" style="width: 100%">
+      <el-table :data="filterTableData.slice(startArrayIndex,endArrayIndex)" style="width: 100%">
         <el-table-column type="expand">
           <template #default="props">
             <div style="padding: 10px">
               <p>应聘条件: {{ props.row.applicationConditions }}</p>
               <p>需求人数: {{ props.row.requireCount }}</p>
               <p>申请人数: {{ props.row.applicantCount }}</p>
+              <div>
+                技术栈:
+                <span style=" list-style: none; overflow: hidden;  background: #e7e7e7; border-radius: 2px;
+                              padding: 5px 10px; font-size: 12px;
+                              color: #000000;margin-right: 10px; margin-top: 5px;"
+                      v-if="props.row.technologyStack !=null"
+                      v-for="value in props.row.technologyStack">
+                    {{ value }}
+                  </span>
+              </div>
               <p>更新时间: {{ dayjs(props.row.updateTime).format('YYYY-MM-DD') }}</p>
               <p>发布时间: {{ dayjs(props.row.createTime).format('YYYY-MM-DD') }}</p>
             </div>
           </template>
         </el-table-column>
         <el-table-column label="职位" prop="position"/>
-        <el-table-column label="薪资" prop="salary"/>
+        <el-table-column label="薪资" >
+          <template #default="props">
+           <span v-for="(item,index) in  props.row.salary">
+             {{ item }}
+             <template v-if="index !==  props.row.salary.length-1"> ~ </template>
+           </span>
+          </template>
+        </el-table-column>
         <el-table-column label="地址" prop="address"/>
         <el-table-column label="是否发布" prop="state">
           <template #default="scope">
@@ -36,11 +53,11 @@
     </el-scrollbar>
     <!--职位展示 end-->
     <!--分页-->
-    <el-row>
-      <div class="demo-pagination-block" style="width: 100%;display: flex; flex-wrap: wrap; justify-content: center;">
+    <el-row style=" flex-wrap: wrap; justify-content: center;">
+      <div style="margin-top: -10px">
         <el-pagination
             v-model:currentPage="currentPage"
-            v-model:page-size="pageSize"
+            :page-size="pageSize"
             :pager-count="pagerCount"
             :disabled="disabled"
             :background="background"
@@ -148,17 +165,27 @@ interface job {
 
 
 const currentPage = ref(1)  //当前页
-const pageSize = ref(7) //每页显示条目个数
+const pageSize = ref(4) //每页显示条目个数
 const background = ref(true)  //打开背景色
 const disabled = ref(false) //分页是否禁用
-const totalSize = 100;  // 总条目数
+const totalSize = ref(10);  // 总条目数
 const pagerCount = 5  //显示按钮个数
+const startArrayIndex = ref(0) //数组起始索引值
+const endArrayIndex = ref(pageSize.value) //数组结尾索引值
 const handleSizeChange = (val: number) => {
   console.log(`${val}`, ' items per page')
 }
 const handleCurrentChange = (val: number) => {
-  console.log(`current page: ${val}`)
+  startArrayIndex.value = pageSize.value * (val - 1)
+  endArrayIndex.value = startArrayIndex.value + pageSize.value
+  if (endArrayIndex.value>=totalSize.value){
+    endArrayIndex.value=totalSize.value
+  }
+  // console.log(' startArrayIndex.value', startArrayIndex.value)
+  // console.log(' endArrayIndex.value', endArrayIndex.value)
+  // console.log(`current page: ${val}`)
 }
+
 
 const dialogVisible = ref(false)  //对话框默认不显示
 // const id = store.state.user.profile.id  //获取id
@@ -214,11 +241,19 @@ async function submit() {
 function ConvertToFrontData(arr: any) {
   tableData.length = 0  //响应式数组清空, 必须这样才能清空,否则tableData会失去响应式
   console.log('ConvertToFrontDataArr', arr)
-  for (let arrKey in arr) {
-    arr[arrKey].salary = JSON.parse(arr[arrKey].salary)
-    // value.time.push(tempTime)
-  }
+  arr.forEach((value: any) => {
+    value.updateTime = new Date(value.updateTime)
+    value.createTime = new Date(value.createTime)
+    value.technologyStack = value.technologyStack.split(',')
+    value.salary = JSON.parse(value.salary)
+  })
+  // for (let arrKey in arr) {
+  //   arr[arrKey].salary = JSON.parse(arr[arrKey].salary)
+  //   // value.time.push(tempTime)
+  // }
   tableData.push(...arr)
+  //初始化分页数据
+  totalSize.value = tableData.length
 }
 
 // 单个编辑
@@ -227,13 +262,14 @@ const handleEdit = (index: number, row: { [x: string]: any; }) => {
   for (let rowKey in row) {
     form[rowKey] = row[rowKey]
   }
+  form.technologyStack=form.technologyStack.toString()
+
   URL.value = "/jobList/updateJobList"  //修改路径
 }
 // 单个删除
 const handleDelete = (index: number, row: { number: any; announcerId: number }) => {
   let temp = ref({id: row.announcerId, number: row.number})
   handleDel(temp) //删除操作,获取数据
-
   console.log('arr', arr)
   ConvertToFrontData(arr) //转换为前端数据
 }

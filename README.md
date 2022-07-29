@@ -5,6 +5,10 @@ Vue3+Ts+Element-plus实现后台管理,对接Recruiter后端
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
+统一使用以下命令创建vue3项目
+```sh
+npm init vue@latest recruiter-front-test
+```
 
 ```sh
 npm install

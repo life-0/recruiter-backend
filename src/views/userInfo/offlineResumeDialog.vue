@@ -38,9 +38,9 @@ const props = defineProps({  //获取传参的数据
 // 引入workerSrc的地址
 PDFJS.GlobalWorkerOptions.workerSrc = pdfjsWorker; //设置PDFJS.GlobalWorkerOptions.workerSrc的地址
 let container = ref(null);
-let renderContext = ref(null);
+let renderContext:any = ref(null);
 let pdfUrl = null;
-let PDFBlob: Blob | MediaSource | null = null;//处理文档流
+let PDFBlob: any = ref();//处理文档流
 let readerPdfDoc = null;
 const PDFDialogVisible = ref(false)
 
@@ -85,7 +85,7 @@ function getPdf() {
 }
 
 //展示PDF
-function showPdf(pdfDoc: PDFDocumentProxy, pageNum: number) {
+function showPdf(pdfDoc: any, pageNum: number) {
   pdfDoc.getPage(pageNum).then((page: { getViewport: (arg0: { scale: number; }) => any; render: (arg0: { canvasContext: any; viewport: any; }) => void; }) => {
     // 设置canvas相关的属性
     const canvas = renderContext.value;

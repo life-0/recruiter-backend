@@ -2,7 +2,11 @@
   <div>
     <!--职位展示-->
     <el-scrollbar height="580px">
-      <el-table :data="filterTableData" style="width: 100%">
+      <el-table :data="filterTableData.slice(startArrayIndex, endArrayIndex)"
+                row-key="userInfo.number"
+                :expand-row-keys="appointExpandRow"
+                @row-click="switchRows"
+                style="width: 100%">
         <el-table-column type="expand">
           <template #default="props">
             <!--个人信息框-->
@@ -13,7 +17,7 @@
                 <div style="font-size: 18px;color: #333;letter-spacing: 1.21px;">
                   目前状态:
                   <span style="font-size: 16px;;float:right;margin-right: 10px"
-                        ><!--@click="toggleDialog('userVisible')"-->
+                  ><!--@click="toggleDialog('userVisible')"-->
             编辑
             <el-icon><i-edit/></el-icon></span>
                   <ul class="wanna-title__list" style="display: flex;
@@ -58,7 +62,7 @@
               <el-col :span="22">
                 <div style="font-size: 18px;color: #333;letter-spacing: 1.21px;">
                   求职意向:
-                  <span style="font-size: 16px;;float:right;margin-right: 10px" @click="toggleDialog('jobVisible')">
+                  <span style="font-size: 16px;;float:right;margin-right: 10px" @click="toggleDialog()">
             编辑
             <el-icon><i-edit/></el-icon></span>
                   <ul class="wanna-title__list" style="display: flex;
@@ -291,17 +295,27 @@ interface userTotalInfo {
 
 
 const currentPage = ref(1)  //当前页
-const pageSize = ref(7) //每页显示条目个数
+const pageSize = ref(1) //每页显示条目个数
 const background = ref(true)  //打开背景色
 const disabled = ref(false) //分页是否禁用
-const totalSize = 100;  // 总条目数
+const totalSize = ref(10);  // 总条目数
 const pagerCount = 5  //显示按钮个数
+const startArrayIndex = ref(0) //数组起始索引值
+const endArrayIndex = ref(pageSize.value) //数组结尾索引值
 const handleSizeChange = (val: number) => {
   console.log(`${val}`, ' items per page')
 }
 const handleCurrentChange = (val: number) => {
-  console.log(`current page: ${val}`)
+  startArrayIndex.value = pageSize.value * (val - 1)
+  endArrayIndex.value = startArrayIndex.value + pageSize.value
+  if (endArrayIndex.value >= totalSize.value) {
+    endArrayIndex.value = totalSize.value
+  }
+  // console.log(' startArrayIndex.value', startArrayIndex.value)
+  // console.log(' endArrayIndex.value', endArrayIndex.value)
+  // console.log(`current page: ${val}`)
 }
+
 
 const dialogVisible = ref(false)  //对话框默认不显示
 // const id = store.state.user.profile.id  //获取id
@@ -367,6 +381,19 @@ const filterTableData = computed(() =>
         }
     )
 )
+//打开或关闭某一行
+let appointExpandRow: any = reactive([])//指定展开的行
+function switchRows(row: { userInfo:{number: string} }) {
+  //指定改行展开或者关闭
+  //判断该行row-key指定的number值是否在展开数组appointExpandRow中,并返回索引值
+  const index = appointExpandRow.indexOf(row.userInfo.number)
+  if (index > -1) {
+    appointExpandRow.splice(index, 1)//根据索引删除元素
+  } else {  //未发现
+    appointExpandRow.push(row.userInfo.number)
+  }
+}
+
 
 /*修改组件显示方法*/
 function toggleDialog() {
@@ -403,6 +430,8 @@ function ConvertToFrontData(arr: any) {
   //   console.log('arrKey',arrKey)
   // }
   tableData.push(...arr)
+  //初始化分页数据
+  totalSize.value = tableData.length
 }
 
 //
@@ -456,7 +485,7 @@ async function submitUserInfoResult() {
   console.log('data', data.result[0])
   tableData.forEach(value => {
     if (value.userInfo.id === result.id) {
-      value.userInfo.state=result.state
+      value.userInfo.state = result.state
     }
   })
   toggleUserInfoSateDialog()
@@ -471,7 +500,7 @@ async function InitialTableData() {
   ConvertToFrontData(arr)
 }
 
-const openOnlineResumeDialogRef = ref(null) //在线简历展示框 默认不显示
+const openOnlineResumeDialogRef:any = ref(null) //在线简历展示框 默认不显示
 //简历查看
 const resumeView = (index: number, row: { jobHuntingInfo: any; userInfo: any; }) => {
   //初始化简历样式
@@ -491,7 +520,7 @@ let content = reactive({
   fileName: 'xxx.pdf',
   openDialog: false
 });
-const offlineResumeDialogRef = ref(null) //离线简历展示框 默认不显示
+const offlineResumeDialogRef:any = ref(null) //离线简历展示框 默认不显示
 
 //点击离线简历按钮
 const offlineCVButton = (index: number, row: any) => {

@@ -2,10 +2,13 @@
   <div>
     <!--职位展示-->
     <el-scrollbar height="580px">
-      <el-table :data="filterTableData" style="width: 100%">
+      <el-table :data="filterTableData.slice(startArrayIndex,endArrayIndex)"
+                row-key="number"
+                :expand-row-keys="appointExpandRow"
+                @row-click="switchRows"
+                style="width: 100%">
         <el-table-column type="expand">
           <template #default="props">
-
             <!--企业信息框-->
             <el-row style="display: flex;
         flex-wrap: wrap; justify-content: center;padding: 10px 0;
@@ -218,7 +221,7 @@
           <el-form-item style="width: 98%">
             <el-col :span="23" style="display: flex; flex-wrap: wrap; justify-content: center;">
               <el-button @click="toggleDialog">取消</el-button>
-              <el-button type="primary" @click="submit">提交</el-button>
+              <el-button type="primary" @click="submitUserInfoResult">提交</el-button>
             </el-col>
           </el-form-item>
         </el-form>
@@ -229,7 +232,6 @@
     <!--修改组件 end-->
     <!-- 设置企业状态组件-->
     <el-dialog v-model="firmInfoStateDialogVisible" title="评估框" width="30%" center>
-
       <el-radio-group v-model="userState.state" style="display: flex;  flex-wrap: wrap; justify-content: center;">
         <el-radio :label=true>目前可用</el-radio>
         <el-radio :label=false>设为失效</el-radio>
@@ -248,51 +250,39 @@
 </template>
 
 <script setup lang="ts">
-
-
 import {computed, onMounted, reactive, ref} from 'vue'
 import {postJsonRequest, postRequest} from "@/api";
 import dayjs from "dayjs";
 import {ElNotification} from "element-plus";
+import {jobList} from "@/store/POJOInterface/jobList";
+import {firmInfo} from "@/store/POJOInterface/firmInfo";
 
-
-interface firmInfo {
-  address: string
-  createTime: Date
-  established: Date
-  field: string
-  financingScale: string
-  firmAvatar: string
-  firmId: number
-  firmName: string
-  firmNumber: number
-  infoUrl: string
-  introduction: string
-  legalPerson: string
-  number: string
-  officialUrl: string
-  organizationType: string
-  registeredCapital: string
-  state: boolean
-  updateTime: Date
-  welfare: string[]
-}
 
 
 const currentPage = ref(1)  //当前页
-const pageSize = ref(7) //每页显示条目个数
+const pageSize = ref(2) //每页显示条目个数
 const background = ref(true)  //打开背景色
 const disabled = ref(false) //分页是否禁用
-const totalSize = 100;  // 总条目数
+const totalSize = ref(10);  // 总条目数
 const pagerCount = 5  //显示按钮个数
+const startArrayIndex = ref(0) //数组起始索引值
+const endArrayIndex = ref(pageSize.value) //数组结尾索引值
 const handleSizeChange = (val: number) => {
   console.log(`${val}`, ' items per page')
 }
 const handleCurrentChange = (val: number) => {
-  console.log(`current page: ${val}`)
+  startArrayIndex.value = pageSize.value * (val - 1)
+  endArrayIndex.value = startArrayIndex.value + pageSize.value
+  if (endArrayIndex.value >= totalSize.value) {
+    endArrayIndex.value = totalSize.value
+  }
+  // console.log(' startArrayIndex.value', startArrayIndex.value)
+  // console.log(' endArrayIndex.value', endArrayIndex.value)
+  // console.log(`current page: ${val}`)
 }
 
 const dialogVisible = ref(false)  //对话框默认不显示
+
 // const id = store.state.user.profile.id  //获取id
 let form = reactive<firmInfo>({
   address: "",
@@ -328,6 +318,19 @@ const filterTableData = computed(() =>
     )
 )
 
+//打开或关闭某一行
+let appointExpandRow: any = reactive([])//指定展开的行
+function switchRows(row: { number: string }) {
+  //指定改行展开或者关闭
+  //判断该行row-key指定的number值是否在展开数组appointExpandRow中,并返回索引值
+  const index = appointExpandRow.indexOf(row.number)
+  if (index > -1) {
+    appointExpandRow.splice(index, 1)//根据索引删除元素
+  } else {  //未发现
+    appointExpandRow.push(row.number)
+  }
+}
+
 /*修改组件显示方法*/
 function toggleDialog() {
   dialogVisible.value = !dialogVisible.value;
@@ -346,6 +349,8 @@ function ConvertToFrontData(arr: any) {
   })
 
   tableData.push(...arr)
+  //初始化分页数据
+  totalSize.value = tableData.length
 }
 
 const firmInfoStateDialogVisible = ref(false)
@@ -366,6 +371,7 @@ function handleEditState(index: number, row: firmInfo) {
   userState.firmId = row.firmId
   userState.state = row.state
 }
+
 async function submitUserInfoResult() {
   console.log(userState)
   const data = await postJsonRequest("/firm/updateFirmInfo", userState)
@@ -373,7 +379,7 @@ async function submitUserInfoResult() {
   console.log('data', data.result)
   tableData.forEach(value => {
     if (value.firmId === result.firmId) {
-      value.state=result.state
+      value.state = result.state
     }
   })
   toggleFirmInfoSateDialog()

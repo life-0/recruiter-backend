@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useAppStore } from "@/store/modules/app"
+import {useAppStore} from "@/store/modules/app"
 import zhCn from "element-plus/lib/locale/lang/zh-cn"
 
 useAppStore().initTheme() // 初始化 theme
@@ -8,6 +8,6 @@ const locale = zhCn // element-plus 设置为中文
 
 <template>
   <ElConfigProvider :locale="locale">
-    <router-view />
+    <router-view/>
   </ElConfigProvider>
 </template>

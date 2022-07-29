@@ -81,6 +81,7 @@ jsonInstance.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 jsonInstance.defaults.transformRequest = [
     data => {
         // 转换成json格式 可对应后端的 @RequestBody
+
         return JSON.stringify(data)
     }
 ]
@@ -184,7 +185,8 @@ let fileDownloadInstance = axios.create(
     {   // json格式发送数据
         timeout: 1000 * 80,
         baseURL: api_base_url,
-        responseType: 'blob' //接收返回的类型
+        // responseType: 'blob' //接收返回的类型
+        responseType: 'arraybuffer'
     }
 )
 /*设置json返回的数据*/
@@ -215,8 +217,8 @@ fileDownloadInstance.interceptors.request.use(
         config.cancelToken = new axios.CancelToken(function (c) {
             cancelFn = c
         })
-        //阻止重复请求
-        stopRepeatRequest(requestList, config.url, cancelFn, `不要连续请求：${config.url}，速度太快了`)
+        // //阻止重复请求
+        // stopRepeatRequest(requestList, config.url, cancelFn, `不要连续请求：${config.url}，速度太快了`)
         //{url: "/slides", method: "get", headers: {…}, baseURL: "http://api.hzwlb.org", transformRequest: Array(1), responseType: "json",…}
         return config
     },
@@ -242,7 +244,6 @@ fileDownloadInstance.interceptors.response.use(
         } else if (status >= 400 && status <= 499) {
             // Message.error({ message: '客户端请求错误!' })
             console.log('客户端请求错误码：', status);
-            return
         } else {
             //其他错误
             // Message.error({ message: response.statusText })
@@ -343,7 +344,6 @@ fileUploadInstance.interceptors.response.use(
         } else if (status >= 400 && status <= 499) {
             // Message.error({ message: '客户端请求错误!' })
             console.log('客户端请求错误码：', status);
-            return
         } else {
             //其他错误
             // Message.error({ message: response.statusText })

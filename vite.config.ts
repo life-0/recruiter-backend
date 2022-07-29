@@ -1,8 +1,8 @@
-import { UserConfigExport } from "vite"
-import path, { resolve } from "path"
-import vitePluginImp from "vite-plugin-imp"
-import vue from "@vitejs/plugin-vue"
-import { createSvgIconsPlugin } from "vite-plugin-svg-icons"
+import { UserConfigExport } from "vite";
+import path, { resolve } from "path";
+import vitePluginImp from "vite-plugin-imp";
+import vue from "@vitejs/plugin-vue";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 
 /** 配置项文档：https://vitejs.dev/config */
 export default (): UserConfigExport => {
@@ -12,9 +12,9 @@ export default (): UserConfigExport => {
     resolve: {
       alias: {
         /** @ 符号指向 src 目录 */
-        "@": resolve(__dirname, "./src")
+        "@": resolve(__dirname, "./src"),
       },
-      extensions: [".js", ".vue", ".json", ".scss", "ts", "*"]
+      extensions: [".js", ".vue", ".json", ".scss", "ts", "*"],
     },
     server: {
       /** 是否开启 https */
@@ -40,9 +40,9 @@ export default (): UserConfigExport => {
         "/api": {
           target: "http://localhost:9090/", //实际请求地址
           changeOrigin: true, // 是否允许跨域
-          rewrite: (path) => path.replace(/^\/api/, "")
-        }
-      }
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        },
+      },
       // proxy: {
       //   "/mock-api": {
       //     target: "https://vue-typescript-admin-mock-server-armour.vercel.app/mock-api",
@@ -64,15 +64,15 @@ export default (): UserConfigExport => {
         compress: {
           drop_console: false,
           drop_debugger: true,
-          pure_funcs: ["console.log"]
+          pure_funcs: ["console.log"],
         },
         output: {
           /** 删除注释 */
-          comments: false
-        }
+          comments: false,
+        },
       },
       /** 打包后静态资源目录 */
-      assetsDir: "static"
+      assetsDir: "static",
     },
     /** vite 插件 */
     plugins: [
@@ -80,7 +80,7 @@ export default (): UserConfigExport => {
       /** svg */
       createSvgIconsPlugin({
         iconDirs: [path.resolve(process.cwd(), "src/icons/svg")],
-        symbolId: "icon-[dir]-[name]"
+        symbolId: "icon-[dir]-[name]",
       }),
       vitePluginImp({
         libList: [
@@ -88,11 +88,11 @@ export default (): UserConfigExport => {
           {
             libName: "element-plus",
             style: () => {
-              return `element-plus/dist/index.css`
-            }
-          }
-        ]
-      })
+              return `element-plus/dist/index.css`;
+            },
+          },
+        ],
+      }),
       // AutoImport({
       //   dts: "./types/auto-imports.d.ts",
       //   /** 自动按需导入 element-plus 相关函数，比如 ElMessage */
@@ -109,6 +109,6 @@ export default (): UserConfigExport => {
       //   /** 自动按需导入 element-plus 组件 */
       //   resolvers: [ElementPlusResolver()]
       // })
-    ]
-  }
-}
+    ],
+  };
+};

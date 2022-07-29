@@ -1,5 +1,4 @@
 import {request} from "@/utils/service"
-// @ts-ignore
 import {postRequest} from "@/api"
 
 
