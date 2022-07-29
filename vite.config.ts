@@ -38,7 +38,7 @@ export default (): UserConfigExport => {
         //假如你要请求https://api.*.com/a/a
         //那么axios的url，可以配置为 /api/a/a
         "/api": {
-          target: "http://localhost:9090/", //实际请求地址
+          target: "http://106.52.71.175:9090/", //实际请求地址
           changeOrigin: true, // 是否允许跨域
           rewrite: (path) => path.replace(/^\/api/, ""),
         },

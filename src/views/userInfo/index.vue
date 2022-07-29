@@ -2,11 +2,8 @@
   <div>
     <!--职位展示-->
     <el-scrollbar height="580px">
-      <el-table :data="filterTableData.slice(startArrayIndex, endArrayIndex)"
-                row-key="userInfo.number"
-                :expand-row-keys="appointExpandRow"
-                @row-click="switchRows"
-                style="width: 100%">
+      <el-table :data="filterTableData.slice(startArrayIndex, endArrayIndex)" row-key="userInfo.number"
+        :expand-row-keys="appointExpandRow" @row-click="switchRows" style="width: 100%">
         <el-table-column type="expand">
           <template #default="props">
             <!--个人信息框-->
@@ -16,46 +13,58 @@
               <el-col :span="22">
                 <div style="font-size: 18px;color: #333;letter-spacing: 1.21px;">
                   目前状态:
-                  <span style="font-size: 16px;;float:right;margin-right: 10px"
-                  ><!--@click="toggleDialog('userVisible')"-->
-            编辑
-            <el-icon><i-edit/></el-icon></span>
-                  <ul class="wanna-title__list" style="display: flex;
+                  <span style="font-size: 16px;;float:right;margin-right: 10px">
+                    <!--@click="toggleDialog('userVisible')"-->
+                    编辑
+                    <el-icon>
+                      <i-edit />
+                    </el-icon>
+                  </span>
+                  <ul class="wanna-title__list"
+                    style="display: flex;
                                     flex-wrap: wrap; justify-content: center;  margin-top: 16px; overflow: hidden; list-style: none; ">
                     <li class="wanna-title__item" style="float: left;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
                       现居住地:
-                      <span>{{ props.row.userInfo.address }}</span></li>
+                      <span>{{ props.row.userInfo.address }}</span>
+                    </li>
 
                     <li class="wanna-title__item" style="float: left;;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
                       邮箱:
-                      <span>{{ props.row.userInfo.email }}</span></li>
+                      <span>{{ props.row.userInfo.email }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
                       公司ID:
-                      <span>{{ props.row.userInfo.firmId }}</span></li>
+                      <span>{{ props.row.userInfo.firmId }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;overflow: hidden;
                                           text-overflow: ellipsis;white-space: nowrap; ">
                       个人介绍:
-                      <span>{{ props.row.userInfo.introduction }}</span></li>
+                      <span>{{ props.row.userInfo.introduction }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
                       电话:
-                      <span>{{ props.row.userInfo.iphone }}</span></li>
+                      <span>{{ props.row.userInfo.iphone }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
                       微信:
-                      <span>{{ props.row.userInfo.vx }}</span></li>
+                      <span>{{ props.row.userInfo.vx }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
                       更新时间:
-                      <span>{{ dayjs(props.row.userInfo.updateTime).format('YYYY-MM-DD') }}</span></li>
+                      <span>{{ dayjs(props.row.userInfo.updateTime).format('YYYY-MM-DD') }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
                       创建时间:
-                      <span>{{ dayjs(props.row.userInfo.createTime).format('YYYY-MM-DD') }}</span></li>
+                      <span>{{ dayjs(props.row.userInfo.createTime).format('YYYY-MM-DD') }}</span>
+                    </li>
                   </ul>
                 </div>
               </el-col>
@@ -63,37 +72,45 @@
                 <div style="font-size: 18px;color: #333;letter-spacing: 1.21px;">
                   求职意向:
                   <span style="font-size: 16px;;float:right;margin-right: 10px" @click="toggleDialog()">
-            编辑
-            <el-icon><i-edit/></el-icon></span>
-                  <ul class="wanna-title__list" style="display: flex;
+                    编辑
+                    <el-icon>
+                      <i-edit />
+                    </el-icon>
+                  </span>
+                  <ul class="wanna-title__list"
+                    style="display: flex;
                                     flex-wrap: wrap; justify-content: center;  margin-top: 16px; overflow: hidden; list-style: none; ">
                     <li class="wanna-title__item" style="float: left; font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
                       求职状态:
-                      <span>{{ props.row.jobHuntingInfo.jobStatus }}</span></li>
+                      <span>{{ props.row.jobHuntingInfo.jobStatus }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
                       职位:
-                      <span>{{ props.row.jobHuntingInfo.position }}</span></li>
+                      <span>{{ props.row.jobHuntingInfo.position }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
                       薪资要求:
                       <span>{{ props.row.jobHuntingInfo.salaryMin }} - {{
                           props.row.jobHuntingInfo.salaryMax
-                        }} 元/月</span></li>
+                      }} 元/月</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left;;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
                       期望城市:
-                      <template v-for="(item,index) in props.row.jobHuntingInfo.expectCity">
+                      <template v-for="(item, index) in props.row.jobHuntingInfo.expectCity">
                         <span>{{ item }}</span>
-                        <span v-if="index!==props.row.jobHuntingInfo.expectCity.length-1"> , </span>
+                        <span v-if="index !== props.row.jobHuntingInfo.expectCity.length - 1"> , </span>
                       </template>
 
                     </li>
                     <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
                       工作性质:
-                      <span>{{ props.row.jobHuntingInfo.jobNature }}</span></li>
+                      <span>{{ props.row.jobHuntingInfo.jobNature }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
                       期望行业:
@@ -114,9 +131,9 @@
                       </div>
                       <span title="学历" class="edu-ul-txt" style="">{{ props.row.jobHuntingInfo.education }}</span>
                       <span class="edu-ul-txt">{{ props.row.jobHuntingInfo.profession }}</span>
-                      <template v-for="(item,index) in props.row.jobHuntingInfo.academicYear">
+                      <template v-for="(item, index) in props.row.jobHuntingInfo.academicYear">
                         {{ dayjs(item).format("YYYY-MM-DD") }}
-                        <template v-if="index!==props.row.jobHuntingInfo.academicYear.length-1"> ~</template>
+                        <template v-if="index !== props.row.jobHuntingInfo.academicYear.length - 1"> ~</template>
                       </template>
                     </li>
                   </ul>
@@ -148,9 +165,9 @@
             </el-row>
           </template>
         </el-table-column>
-        <el-table-column label="id" prop="userInfo.id"/>
-        <el-table-column label="number" prop="userInfo.number"/>
-        <el-table-column label="姓名" prop="userInfo.name"/>
+        <el-table-column label="id" prop="userInfo.id" />
+        <el-table-column label="number" prop="userInfo.number" />
+        <el-table-column label="姓名" prop="userInfo.name" />
         <el-table-column label="是否有效" prop="userInfo.state">
           <template #default="scope">
             <span v-if='scope.row.userInfo.state'>是</span>
@@ -160,20 +177,19 @@
         <el-table-column label="简历查看">
           <template #default="scope">
             <!--在线简历按钮-->
-            <el-button size="small" type="danger"
-                       @click="resumeView(scope.$index, scope.row)">
+            <el-button size="small" type="danger" @click="resumeView(scope.$index, scope.row)">
               在线简历查看
             </el-button>
             <!--离线简历按钮-->
             <el-button size="small" style="margin-top:5px;margin-left:0"
-                       @click="offlineCVButton(scope.$index, scope.row)">
+              @click="offlineCVButton(scope.$index, scope.row)">
               附件简历查看
             </el-button>
           </template>
         </el-table-column>
         <el-table-column align="right" style="">
           <template #header>
-            <el-input v-model="search" size="default" placeholder="数据搜索"/>
+            <el-input v-model="search" size="default" placeholder="数据搜索" />
           </template>
           <template #default="scope">
             <el-button size="default" @click="handleEditState(scope.$index, scope.row.userInfo)">状态设置</el-button>
@@ -187,18 +203,9 @@
     <!--分页-->
     <el-row>
       <div class="demo-pagination-block" style="width: 100%;display: flex; flex-wrap: wrap; justify-content: center;">
-        <el-pagination
-            v-model:currentPage="currentPage"
-            v-model:page-size="pageSize"
-            :pager-count="pagerCount"
-            :disabled="disabled"
-            :background="background"
-            hide-on-single-page
-            layout="prev, pager, next, jumper"
-            :total="totalSize"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-        />
+        <el-pagination v-model:currentPage="currentPage" v-model:page-size="pageSize" :pager-count="pagerCount"
+          :disabled="disabled" :background="background" hide-on-single-page layout="prev, pager, next, jumper"
+          :total="totalSize" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
       </div>
     </el-row>
     <!--分页 end-->
@@ -223,10 +230,10 @@
 
 
       <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="toggleUserInfoSateDialog">取消</el-button>
-        <el-button type="primary" @click="submitUserInfoResult">确认</el-button>
-      </span>
+        <span class="dialog-footer">
+          <el-button @click="toggleUserInfoSateDialog">取消</el-button>
+          <el-button type="primary" @click="submitUserInfoResult">确认</el-button>
+        </span>
       </template>
     </el-dialog>
     <!--设置用户状态组件 end-->
@@ -237,10 +244,10 @@
 import OfflineResumeDialog from './offlineResumeDialog.vue'
 import OnlineResumeDialog from './onlineResumeDialog.vue'
 
-import {computed, onMounted, reactive, ref} from 'vue'
-import {postJsonRequest, postRequest} from "@/api";
+import { computed, onMounted, reactive, ref } from 'vue'
+import { postJsonRequest, postRequest } from "@/api";
 import dayjs from "dayjs";
-import {ElNotification} from "element-plus";
+import { ElNotification } from "element-plus";
 
 interface userTotalInfo {
   userInfo: {
@@ -374,16 +381,16 @@ let tableData: userTotalInfo[] = reactive([])
 let URL = ref<string>('')
 //数据过滤集
 const filterTableData = computed(() =>
-    tableData.filter(
-        (data) => {
-          // return !search.value || data.name.toLowerCase().includes(search.value.toLowerCase())
-          return !search.value || JSON.stringify(data).toLowerCase().includes(search.value.toLowerCase())
-        }
-    )
+  tableData.filter(
+    (data) => {
+      // return !search.value || data.name.toLowerCase().includes(search.value.toLowerCase())
+      return !search.value || JSON.stringify(data).toLowerCase().includes(search.value.toLowerCase())
+    }
+  )
 )
 //打开或关闭某一行
 let appointExpandRow: any = reactive([])//指定展开的行
-function switchRows(row: { userInfo:{number: string} }) {
+function switchRows(row: { userInfo: { number: string } }) {
   //指定改行展开或者关闭
   //判断该行row-key指定的number值是否在展开数组appointExpandRow中,并返回索引值
   const index = appointExpandRow.indexOf(row.userInfo.number)
@@ -494,13 +501,14 @@ async function submitUserInfoResult() {
 //初始化数据
 async function InitialTableData() {
   const data = await postJsonRequest("/resumeDelivery/getUserInfoJobHuntingInfo", {});
+  //  const data = await postJsonRequest("/firm/getFirmInfo", {});
   const arr = data.result //获取数据
-  // console.log(arr)
+  // console.log("arr",arr)
   // tableData.length = 0  //响应式数组清空
   ConvertToFrontData(arr)
 }
 
-const openOnlineResumeDialogRef:any = ref(null) //在线简历展示框 默认不显示
+const openOnlineResumeDialogRef: any = ref(null) //在线简历展示框 默认不显示
 //简历查看
 const resumeView = (index: number, row: { jobHuntingInfo: any; userInfo: any; }) => {
   //初始化简历样式
@@ -508,7 +516,7 @@ const resumeView = (index: number, row: { jobHuntingInfo: any; userInfo: any; })
   form.jobHuntingInfo = row.jobHuntingInfo
   form.userInfo = row.userInfo
   console.log('resumeInfo.resumeDelivery.isOnlineResume', form.resumeDelivery.isOnlineResume,
-      typeof form.resumeDelivery.isOnlineResume)
+    typeof form.resumeDelivery.isOnlineResume)
   openOnlineResumeDialogRef.value.openOnlineResumeDialog()  //打开组件,并初始化简历数据
   // console.log('resumeViewRow:', row)
   console.log('FatherResumeInfo', form)
@@ -520,7 +528,7 @@ let content = reactive({
   fileName: 'xxx.pdf',
   openDialog: false
 });
-const offlineResumeDialogRef:any = ref(null) //离线简历展示框 默认不显示
+const offlineResumeDialogRef: any = ref(null) //离线简历展示框 默认不显示
 
 //点击离线简历按钮
 const offlineCVButton = (index: number, row: any) => {

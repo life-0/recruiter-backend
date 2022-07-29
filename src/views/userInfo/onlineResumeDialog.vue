@@ -16,31 +16,36 @@
             <li class="wanna-title__item" style="float: left;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
               意向职位:
-              <span style="color: #0a0a0a">{{ resumeInfo.jobHuntingInfo.position }}</span></li>
+              <span style="color: #0a0a0a">{{ resumeInfo.jobHuntingInfo.position }}</span>
+            </li>
             <li class="wanna-title__item" style="float: left;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
               意向城市:
               <span style="color: #0a0a0a">
-                <template v-for="(item,index) in resumeInfo.jobHuntingInfo.expectCity ">
+                <template v-for="(item, index) in resumeInfo.jobHuntingInfo.expectCity ">
                   {{ item }}
-                  <template v-if="index!==resumeInfo.jobHuntingInfo.expectCity.length-1">
+                  <template v-if="index !== resumeInfo.jobHuntingInfo.expectCity.length - 1">
                     ,
                   </template>
                 </template>
                 <!--                {{ resumeInfo.jobHuntingInfo.expectCity }}-->
-              </span></li>
+              </span>
+            </li>
             <li class="wanna-title__item" style="float: left;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
               电话:
-              <span style="color: #0a0a0a">{{ resumeInfo.userInfo.iphone }}</span></li>
+              <span style="color: #0a0a0a">{{ resumeInfo.userInfo.iphone }}</span>
+            </li>
             <li class="wanna-title__item" style="float: left;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
               邮箱:
-              <span style="color: #0a0a0a">{{ resumeInfo.userInfo.email }}</span></li>
+              <span style="color: #0a0a0a">{{ resumeInfo.userInfo.email }}</span>
+            </li>
             <li class="wanna-title__item" style="float: left;font-size: 14px; width: 100%;
                                           color: #666; line-height: 24px;margin-top: 10px">
               微信:
-              <span style="color: #0a0a0a">{{ resumeInfo.userInfo.vx }}</span></li>
+              <span style="color: #0a0a0a">{{ resumeInfo.userInfo.vx }}</span>
+            </li>
           </ul>
         </el-col>
         <el-col :span="23" style="margin-bottom: 15px">
@@ -54,30 +59,34 @@
             <li class="wanna-title__item" style="float: left;font-size: 14px; width: 50%;
                                           color: #000000; line-height: 24px;margin-top: 10px">
               毕业院校:
-              <span style="color: #0a0a0a">{{ resumeInfo.jobHuntingInfo.colleges }}</span></li>
+              <span style="color: #0a0a0a">{{ resumeInfo.jobHuntingInfo.colleges }}</span>
+            </li>
             <li class="wanna-title__item" style="float: left;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
               学历:
-              <span style="color: #0a0a0a">{{ resumeInfo.jobHuntingInfo.education }}</span></li>
+              <span style="color: #0a0a0a">{{ resumeInfo.jobHuntingInfo.education }}</span>
+            </li>
             <li class="wanna-title__item" style="float: left;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
               专业:
-              <span style="color: #0a0a0a">{{ resumeInfo.jobHuntingInfo.profession }}</span></li>
+              <span style="color: #0a0a0a">{{ resumeInfo.jobHuntingInfo.profession }}</span>
+            </li>
             <li class="wanna-title__item" style="float: left;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
               学年:
               <span style="color: #0a0a0a">
-<!--                  <template v-for="(item,index) in  (resumeInfo.jobHuntingInfo.academicYear.split(',') )">-->
-                 <template v-for="(item,index) in  (resumeInfo.jobHuntingInfo.academicYear)">
-<!--                    {{ timestampFormat(item, 'yyyy-MM-dd') }}~-->
-                   <!--                    {{ new Date((parseInt(item))).format('yyyy-MM-dd') }}-->
-                    {{ dayjs(item).format("YYYY-MM-DD") }}
-                    <template v-if="index !==(resumeInfo.jobHuntingInfo.academicYear.length-1)">
-                      ~
-                    </template>
+                <!--                  <template v-for="(item,index) in  (resumeInfo.jobHuntingInfo.academicYear.split(',') )">-->
+                <template v-for="(item, index) in  (resumeInfo.jobHuntingInfo.academicYear)">
+                  <!--                    {{ timestampFormat(item, 'yyyy-MM-dd') }}~-->
+                  <!--                    {{ new Date((parseInt(item))).format('yyyy-MM-dd') }}-->
+                  {{ dayjs(item).format("YYYY-MM-DD") }}
+                  <template v-if="index !== (resumeInfo.jobHuntingInfo.academicYear.length - 1)">
+                    ~
                   </template>
+                </template>
 
-                </span></li>
+              </span>
+            </li>
           </ul>
         </el-col>
         <el-col :span="23" style="margin-bottom: 15px">
@@ -87,7 +96,7 @@
           </div>
           <ul class="" style=" overflow: hidden;white-space: pre-wrap; ">
             <li class="wanna-title__item"
-                style="float: left;font-size: 14px; width: 100%; color: #000000; line-height: 24px;margin-top: 10px">
+              style="float: left;font-size: 14px; width: 100%; color: #000000; line-height: 24px;margin-top: 10px">
               {{ resumeInfo.jobHuntingInfo.professionalSkill }}
             </li>
 
@@ -100,7 +109,7 @@
           </div>
           <ul class="" style=" overflow: hidden; white-space: pre-wrap;">
             <li class="wanna-title__item"
-                style="float: left;font-size: 14px; width: 100%; color: #000000; line-height: 24px;margin-top: 10px">
+              style="float: left;font-size: 14px; width: 100%; color: #000000; line-height: 24px;margin-top: 10px">
               {{ resumeInfo.jobHuntingInfo.works }}
             </li>
 
@@ -111,8 +120,7 @@
     <el-row>
       <el-col :span="23" style="margin-top: 10px;display: flex; flex-wrap: wrap; justify-content: center;">
         <el-button>取消</el-button>
-        <el-button type="primary"
-                   @click="exportPDF(resumeInfo.jobHuntingInfo.position+'_'+resumeInfo.userInfo.name)">
+        <el-button type="primary" @click="exportPDF(resumeInfo.jobHuntingInfo.position + '_' + resumeInfo.userInfo.name)">
           导出PDF
         </el-button>
       </el-col>
@@ -122,8 +130,8 @@
 </template>
 
 <script setup lang="ts">
-import {  nextTick, onMounted, reactive, ref, watch} from "vue";
-import {getPdf} from '@/utils/htmlToPdf.js'
+import { nextTick, onMounted, reactive, ref, watch } from "vue";
+import { getPdf } from '@/utils/htmlToPdf.js'
 import dayjs from 'dayjs'
 
 const resumeDialogVisible = ref(false)  //简历展示框 默认不显示
@@ -220,5 +228,4 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
 </style>

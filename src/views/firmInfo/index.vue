@@ -2,11 +2,8 @@
   <div>
     <!--职位展示-->
     <el-scrollbar height="580px">
-      <el-table :data="filterTableData.slice(startArrayIndex,endArrayIndex)"
-                row-key="number"
-                :expand-row-keys="appointExpandRow"
-                @row-click="switchRows"
-                style="width: 100%">
+      <el-table :data="filterTableData.slice(startArrayIndex, endArrayIndex)" row-key="number"
+        :expand-row-keys="appointExpandRow" @row-click="switchRows" style="width: 100%">
         <el-table-column type="expand">
           <template #default="props">
             <!--企业信息框-->
@@ -23,7 +20,7 @@
                   border:  1px #a5a7a8;
                   transition: 0.3s;float: left;
                   margin-top: 5px;
-                  " alt="..."/>
+                  " alt="..." />
               </el-col>
               <!--个人姓名行-->
               <el-col :span="14" style="color: #333">
@@ -38,8 +35,7 @@
                 <div style="margin-top: 15px">
                   <div style="">
                     企业官网:
-                    <a :href="props.row.officialUrl"
-                       style=" display: inline-block;vertical-align: bottom;text-decoration:none;color: #6babda;white-space: nowrap;  overflow: hidden;
+                    <a :href="props.row.officialUrl" style=" display: inline-block;vertical-align: bottom;text-decoration:none;color: #6babda;white-space: nowrap;  overflow: hidden;
                               text-overflow: ellipsis;width: 50%">{{ props.row.officialUrl }}</a>
                   </div>
                 </div>
@@ -61,50 +57,58 @@
                     <li class="wanna-title__item" style="float: left;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
                       融资规模:
-                      <span>{{ props.row.financingScale }}</span></li>
+                      <span>{{ props.row.financingScale }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
                       企业人数:
-                      <span>{{ props.row.firmNumber }}</span></li>
+                      <span>{{ props.row.firmNumber }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
                       企业领域:
-                      <span>{{ props.row.field }}</span></li>
+                      <span>{{ props.row.field }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
                       成立时间:
-                      <span>{{ props.row.established }}</span></li>
+                      <span>{{ props.row.established }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
                       法人代表:
-                      <span>{{ props.row.legalPerson }}</span></li>
+                      <span>{{ props.row.legalPerson }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
                       注册资本:
-                      <span>{{ props.row.registeredCapital }}</span></li>
+                      <span>{{ props.row.registeredCapital }}</span>
+                    </li>
 
                     <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
                       企业地址:
-                      <span>{{ props.row.address }}</span></li>
+                      <span>{{ props.row.address }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;margin-top: 10px">
                       企业性质:
-                      <span>{{ props.row.organizationType }}</span></li>
+                      <span>{{ props.row.organizationType }}</span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; ;font-size: 14px; width: 100%;
                                           color: #666; line-height: 24px;margin-top: 10px">
                       企业信息:
-                      <span>  <a :href="props.row.officialUrl"
-                                 style=" display: inline-block;vertical-align: bottom;text-decoration:none;color: #6babda;
+                      <span> <a :href="props.row.officialUrl" style=" display: inline-block;vertical-align: bottom;text-decoration:none;color: #6babda;
                            white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;width: 50%">
-                  {{ props.row.infoUrl }}</a></span></li>
+                          {{ props.row.infoUrl }}</a></span>
+                    </li>
                     <li class="wanna-title__item" style="float: left; ;font-size: 14px;width: 100%;
                white-space: nowrap;  overflow: hidden; text-overflow: ellipsis;
                                           color: #666; line-height: 24px;margin-top: 10px">
                       企业福利:
-                      <template v-for="(item,index) in props.row.welfare ">
+                      <template v-for="(item, index) in props.row.welfare ">
                         <span>{{ item }}</span>
-                        <span v-if="index!== props.row.welfare .length-1">, </span>
+                        <span v-if="index !== props.row.welfare.length - 1">, </span>
                       </template>
                     </li>
                   </ul>
@@ -125,9 +129,9 @@
             <!--企业信息框 end-->
           </template>
         </el-table-column>
-        <el-table-column label="公司ID" prop="firmId"/>
-        <el-table-column label="number" prop="number"/>
-        <el-table-column label="公司名" prop="firmName"/>
+        <el-table-column label="公司ID" prop="firmId" />
+        <el-table-column label="number" prop="number" />
+        <el-table-column label="公司名" prop="firmName" />
         <el-table-column label="目前状态" prop="state">
           <template #default="scope">
             <span v-if='scope.row.state'>目前可用</span>
@@ -136,7 +140,7 @@
         </el-table-column>
         <el-table-column align="right" style="">
           <template #header>
-            <el-input v-model="search" size="default" placeholder="数据搜索"/>
+            <el-input v-model="search" size="default" placeholder="数据搜索" />
           </template>
           <template #default="scope">
             <el-button size="default" @click="handleEditState(scope.$index, scope.row)">状态设置</el-button>
@@ -150,86 +154,13 @@
     <!--分页-->
     <el-row>
       <div class="demo-pagination-block" style="width: 100%;display: flex; flex-wrap: wrap; justify-content: center;">
-        <el-pagination
-            v-model:currentPage="currentPage"
-            v-model:page-size="pageSize"
-            :pager-count="pagerCount"
-            :disabled="disabled"
-            :background="background"
-            hide-on-single-page
-            layout="prev, pager, next, jumper"
-            :total="totalSize"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-        />
+        <el-pagination v-model:currentPage="currentPage" v-model:page-size="pageSize" :pager-count="pagerCount"
+          :disabled="disabled" :background="background" hide-on-single-page layout="prev, pager, next, jumper"
+          :total="totalSize" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
       </div>
     </el-row>
     <!--分页 end-->
-    <!--修改组件-->
-    <div>
-      <el-dialog
-          v-model="dialogVisible"
-          title="编辑组件">
-        <!--编辑表单-->
-        <el-form :model="form" :inline="true" class="demo-form-inline">
-          <el-form-item>
-            <el-col :span="11" style="margin-bottom: 10px">
-              <label style="width:65px;margin-right: 5px">职位 :</label>
-              <el-input v-model="form.position" style="width: auto"/>
-            </el-col>
-            <el-col :span="11" style="margin-bottom: 10px">
-              <label style="width:65px;margin-right: 5px">公司地址 :</label>
-              <el-input v-model="form.address" style="width: auto"/>
-            </el-col>
-            <el-col :span="16" style="margin-bottom: 10px">
-              <label style="width:65px;margin-right: 5px">薪资 :</label>
-              <el-input v-model="form.salary[0]" style="width: 26%"/>
-              <span class="text-gray-500"> -- </span>
-              <el-input v-model="form.salary[1]" style="width: 26%"/>
-              <span class="text-gray-500"> / 月</span>
-            </el-col>
-            <el-col :span="6" style="margin-bottom: 10px"></el-col>
-            <el-col :span="6" style="margin-bottom: 10px">
-              <label style="width:65px;margin-right: 5px">需求人数 :</label>
-              <el-input v-model="form.requireCount" style="width: 30%"/>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 10px">
-              <label style="width:100px;margin-right: 5px">目前申请人数 :</label>
-              <span>{{ form.requireCount }}</span>
-            </el-col>
-            <el-col :span="8" style="margin-bottom: 10px">
-              <label style="width:65px;margin-right: 5px">是否发布 :</label>
-              <el-radio-group v-model="form.state">
-                <el-radio :label=true>是</el-radio>
-                <el-radio :label=false>否</el-radio>
-              </el-radio-group>
-            </el-col>
-          </el-form-item>
-          <el-form-item style="width: 100%">
-            <el-col :span="23" style="margin-bottom: 10px">
-              <label style="width:65px;margin-right: 5px">应聘条件 :</label>
-              <el-input
-                  v-model="form.applicationConditions"
-                  :autosize="{ minRows: 4, maxRows: 8}"
-                  type="textarea"
-                  placeholder="Please input"
-              />
-            </el-col>
 
-          </el-form-item>
-
-          <el-form-item style="width: 98%">
-            <el-col :span="23" style="display: flex; flex-wrap: wrap; justify-content: center;">
-              <el-button @click="toggleDialog">取消</el-button>
-              <el-button type="primary" @click="submitUserInfoResult">提交</el-button>
-            </el-col>
-          </el-form-item>
-        </el-form>
-        <!--编辑表单 end-->
-
-      </el-dialog>
-    </div>
-    <!--修改组件 end-->
     <!-- 设置企业状态组件-->
     <el-dialog v-model="firmInfoStateDialogVisible" title="评估框" width="30%" center>
       <el-radio-group v-model="userState.state" style="display: flex;  flex-wrap: wrap; justify-content: center;">
@@ -239,10 +170,10 @@
 
 
       <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="toggleFirmInfoSateDialog">取消</el-button>
-        <el-button type="primary" @click="submitUserInfoResult">确认</el-button>
-      </span>
+        <span class="dialog-footer">
+          <el-button @click="toggleFirmInfoSateDialog">取消</el-button>
+          <el-button type="primary" @click="submitUserInfoResult">确认</el-button>
+        </span>
       </template>
     </el-dialog>
     <!--设置企业状态组件 end-->
@@ -250,12 +181,12 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, reactive, ref} from 'vue'
-import {postJsonRequest, postRequest} from "@/api";
+import { computed, onMounted, reactive, ref } from 'vue'
+import { postJsonRequest, postRequest } from "@/api";
 import dayjs from "dayjs";
-import {ElNotification} from "element-plus";
-import {jobList} from "@/store/POJOInterface/jobList";
-import {firmInfo} from "@/store/POJOInterface/firmInfo";
+import { ElNotification } from "element-plus";
+import { jobList } from "@/store/POJOInterface/jobList";
+import { firmInfo } from "@/store/POJOInterface/firmInfo";
 
 
 
@@ -310,12 +241,12 @@ let tableData: firmInfo[] = reactive([])
 let URL = ref<string>('')
 //数据过滤集
 const filterTableData = computed(() =>
-    tableData.filter(
-        (data) => {
-          // return !search.value || data.name.toLowerCase().includes(search.value.toLowerCase())
-          return !search.value || JSON.stringify(data).toLowerCase().includes(search.value.toLowerCase())
-        }
-    )
+  tableData.filter(
+    (data) => {
+      // return !search.value || data.name.toLowerCase().includes(search.value.toLowerCase())
+      return !search.value || JSON.stringify(data).toLowerCase().includes(search.value.toLowerCase())
+    }
+  )
 )
 
 //打开或关闭某一行
@@ -365,7 +296,7 @@ let userState = reactive({
   state: true
 })
 
-function handleEditState(index: number, row: firmInfo) {
+function handleEditState(index: number, row: { firmId: number, state: boolean }) {
   toggleFirmInfoSateDialog()
   // console.log('row', row)
   userState.firmId = row.firmId

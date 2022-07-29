@@ -153,7 +153,7 @@ export function fileToExcel(file: any) {
                 type: 'binary'
             })
             const result: any = []
-            workbook.SheetNames.forEach((item) => {
+            workbook.SheetNames.forEach((item:any) => {
                 result.push({
                     sheetName: item,
                     data: xlsx.utils.sheet_to_json(workbook.Sheets[item])

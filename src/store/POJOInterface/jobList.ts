@@ -25,7 +25,7 @@ export interface jobList {
     /**
      * 薪资
      */
-    salary: number[];
+    salary?: number[];
 
     /**
      * 工作地址

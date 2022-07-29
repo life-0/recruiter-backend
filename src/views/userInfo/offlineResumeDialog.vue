@@ -1,27 +1,27 @@
 <!--suppress TypeScriptUnresolvedVariable -->
 <template>
   <div>
-<!--    <el-button @click="getPdf">离线简历展示</el-button>-->
+    <!--    <el-button @click="getPdf">离线简历展示</el-button>-->
     <!-- 评估组件-->
     <el-dialog v-model="PDFDialogVisible" title="附件简历展示" width="60%" center>
       <el-row style="width: 100%">
         <canvas ref="renderContext"></canvas>
       </el-row>
       <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="PDFDialogVisible = false">关闭</el-button>
-        <el-button type="primary" @click="exportPDF">导出</el-button>
-      </span>
+        <span class="dialog-footer">
+          <el-button @click="PDFDialogVisible = false">关闭</el-button>
+          <el-button type="primary" @click="exportPDF">导出</el-button>
+        </span>
       </template>
     </el-dialog>
     <!--评估组件 end-->
   </div>
 </template>
 <script setup lang="ts">
-import { nextTick, onMounted, ref, watch} from "vue";
+import { nextTick, onMounted, ref, watch } from "vue";
 import * as PDFJS from "pdfjs-dist/legacy/build/pdf";  // 引入PDFJS
 import pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
-import {postFileDownload, postRequest} from "@/api"
+import { postFileDownload, postRequest } from "@/api"
 
 //子组件获得上层父组件值
 const props = defineProps({  //获取传参的数据
@@ -29,7 +29,7 @@ const props = defineProps({  //获取传参的数据
     type: Object,
     default: {
       fileName: "",
-      id:"",
+      id: "",
       openDialog: false,
     }
   }
@@ -38,7 +38,7 @@ const props = defineProps({  //获取传参的数据
 // 引入workerSrc的地址
 PDFJS.GlobalWorkerOptions.workerSrc = pdfjsWorker; //设置PDFJS.GlobalWorkerOptions.workerSrc的地址
 let container = ref(null);
-let renderContext:any = ref(null);
+let renderContext: any = ref(null);
 let pdfUrl = null;
 let PDFBlob: any = ref();//处理文档流
 let readerPdfDoc = null;
@@ -66,7 +66,7 @@ function toggle() {
 
 function getPdf() {
 
-  postFileDownload('/file/downloadFile', {fileName: props.data.fileName, id: props.data.id}).then((response: BlobPart) => {
+  postFileDownload('/file/downloadFile', { fileName: props.data.fileName, id: props.data.id }).then((response: BlobPart) => {
     // const blob = new Blob([response]);//处理文档流
     PDFBlob = new Blob([response]);//处理文档流
     pdfUrl = window.URL.createObjectURL(PDFBlob)
@@ -92,15 +92,15 @@ function showPdf(pdfDoc: any, pageNum: number) {
     const ctx = canvas.getContext("2d");
     const dpr = window.devicePixelRatio || 1;
     const bsr =
-        ctx.webkitBackingStorePixelRatio ||
-        ctx.mozBackingStorePixelRatio ||
-        ctx.msBackingStorePixelRatio ||
-        ctx.oBackingStorePixelRatio ||
-        ctx.backingStorePixelRatio ||
-        1;
+      ctx.webkitBackingStorePixelRatio ||
+      ctx.mozBackingStorePixelRatio ||
+      ctx.msBackingStorePixelRatio ||
+      ctx.oBackingStorePixelRatio ||
+      ctx.backingStorePixelRatio ||
+      1;
     const ratio = dpr / bsr;
-    const viewport = page.getViewport({scale: 1});
-    canvas.width = viewport.width * ratio ;
+    const viewport = page.getViewport({ scale: 1 });
+    canvas.width = viewport.width * ratio;
     canvas.height = viewport.height * ratio;
     canvas.style.width = viewport.width + "px";
     canvas.style.height = viewport.height + "px";
@@ -156,7 +156,6 @@ onMounted(() => {
 
 </script>
 <style lang="less">
-
 </style>
 
 

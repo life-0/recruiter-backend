@@ -9,3 +9,4 @@ declare module "*.yaml"
 declare module "*.json"
 
 declare module 'pdfjs-dist/build/pdf.worker.entry'
+declare module 'xlsx'

@@ -2,7 +2,7 @@
   <div>
     <!--职位展示-->
     <el-scrollbar height="580px">
-      <el-table :data="filterTableData.slice(startArrayIndex,endArrayIndex)" style="width: 100%">
+      <el-table :data="filterTableData.slice(startArrayIndex, endArrayIndex)" style="width: 100%">
         <el-table-column type="expand">
           <template #default="props">
             <div style="padding: 10px">
@@ -14,26 +14,25 @@
                 <span style=" list-style: none; overflow: hidden;  background: #e7e7e7; border-radius: 2px;
                               padding: 5px 10px; font-size: 12px;
                               color: #000000;margin-right: 10px; margin-top: 5px;"
-                      v-if="props.row.technologyStack !=null"
-                      v-for="value in props.row.technologyStack">
-                    {{ value }}
-                  </span>
+                  v-if="props.row.technologyStack != null" v-for="value in props.row.technologyStack">
+                  {{ value }}
+                </span>
               </div>
               <p>更新时间: {{ dayjs(props.row.updateTime).format('YYYY-MM-DD') }}</p>
               <p>发布时间: {{ dayjs(props.row.createTime).format('YYYY-MM-DD') }}</p>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="职位" prop="position"/>
-        <el-table-column label="薪资" >
+        <el-table-column label="职位" prop="position" />
+        <el-table-column label="薪资">
           <template #default="props">
-           <span v-for="(item,index) in  props.row.salary">
-             {{ item }}
-             <template v-if="index !==  props.row.salary.length-1"> ~ </template>
-           </span>
+            <span v-for="(item, index) in  props.row.salary">
+              {{ item }}
+              <template v-if="index !== props.row.salary.length - 1"> ~ </template>
+            </span>
           </template>
         </el-table-column>
-        <el-table-column label="地址" prop="address"/>
+        <el-table-column label="地址" prop="address" />
         <el-table-column label="是否发布" prop="state">
           <template #default="scope">
             <span v-if='scope.row.state'>是</span>
@@ -42,7 +41,7 @@
         </el-table-column>
         <el-table-column align="right" style="">
           <template #header>
-            <el-input v-model="search" size="default" placeholder="数据搜索"/>
+            <el-input v-model="search" size="default" placeholder="数据搜索" />
           </template>
           <template #default="scope">
             <el-button size="default" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -55,48 +54,37 @@
     <!--分页-->
     <el-row style=" flex-wrap: wrap; justify-content: center;">
       <div style="margin-top: -10px">
-        <el-pagination
-            v-model:currentPage="currentPage"
-            :page-size="pageSize"
-            :pager-count="pagerCount"
-            :disabled="disabled"
-            :background="background"
-            hide-on-single-page
-            layout="prev, pager, next, jumper"
-            :total="totalSize"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-        />
+        <el-pagination v-model:currentPage="currentPage" :page-size="pageSize" :pager-count="pagerCount"
+          :disabled="disabled" :background="background" hide-on-single-page layout="prev, pager, next, jumper"
+          :total="totalSize" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
       </div>
     </el-row>
     <!--分页 end-->
     <!--修改组件-->
     <div>
-      <el-dialog
-          v-model="dialogVisible"
-          title="编辑组件">
+      <el-dialog v-model="dialogVisible" title="编辑组件">
         <!--编辑表单-->
         <el-form :model="form" :inline="true" class="demo-form-inline">
           <el-form-item>
             <el-col :span="11" style="margin-bottom: 10px">
               <label style="width:65px;margin-right: 5px">职位 :</label>
-              <el-input v-model="form.position" style="width: auto"/>
+              <el-input v-model="form.position" style="width: auto" />
             </el-col>
             <el-col :span="11" style="margin-bottom: 10px">
               <label style="width:65px;margin-right: 5px">公司地址 :</label>
-              <el-input v-model="form.address" style="width: auto"/>
+              <el-input v-model="form.address" style="width: auto" />
             </el-col>
             <el-col :span="16" style="margin-bottom: 10px">
               <label style="width:65px;margin-right: 5px">薪资 :</label>
-              <el-input v-model="form.salary[0]" style="width: 26%"/>
+              <el-input v-model="form.salary[0]" style="width: 26%" />
               <span class="text-gray-500"> -- </span>
-              <el-input v-model="form.salary[1]" style="width: 26%"/>
+              <el-input v-model="form.salary[1]" style="width: 26%" />
               <span class="text-gray-500"> / 月</span>
             </el-col>
             <el-col :span="6" style="margin-bottom: 10px"></el-col>
             <el-col :span="6" style="margin-bottom: 10px">
               <label style="width:65px;margin-right: 5px">需求人数 :</label>
-              <el-input v-model="form.requireCount" style="width: 30%"/>
+              <el-input v-model="form.requireCount" style="width: 30%" />
             </el-col>
             <el-col :span="8" style="margin-bottom: 10px">
               <label style="width:100px;margin-right: 5px">目前申请人数 :</label>
@@ -109,16 +97,25 @@
                 <el-radio :label=false>否</el-radio>
               </el-radio-group>
             </el-col>
+            <el-col :span="22" style="margin-bottom: 10px">
+              <label style="width:100px;margin-right: 5px">技术栈 :</label>
+              <el-select-v2 v-model="form.technologyStack" filterable :options="options" placeholder="Please select"
+                style="width: 240px" multiple>
+                <template #default="{ item }">
+                  <span style="margin-right: 8px">{{ item.label }}</span>
+                  <span style="color: var(--el-text-color-secondary); font-size: 13px">
+                    {{ item.value }}
+                  </span>
+                </template>
+              </el-select-v2>
+              <!-- <span>{{ form.technologyStack }}</span> -->
+            </el-col>
           </el-form-item>
           <el-form-item style="width: 100%">
             <el-col :span="23" style="margin-bottom: 10px">
               <label style="width:65px;margin-right: 5px">应聘条件 :</label>
-              <el-input
-                  v-model="form.applicationConditions"
-                  :autosize="{ minRows: 4, maxRows: 8}"
-                  type="textarea"
-                  placeholder="Please input"
-              />
+              <el-input v-model="form.applicationConditions" :autosize="{ minRows: 4, maxRows: 8 }" type="textarea"
+                placeholder="Please input" />
             </el-col>
 
           </el-form-item>
@@ -139,29 +136,11 @@
 </template>
 
 <script setup lang="ts">
-import {computed, nextTick, onMounted, reactive, ref, watch} from 'vue'
-import {postJsonRequest, postRequest} from "@/api";
+import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue'
+import { postJsonRequest, postRequest } from "@/api";
 import dayjs from "dayjs";
+import { jobList } from "@/store/POJOInterface/jobList"
 
-interface job {
-  announcerId: number,
-  education: string,
-  firmId: number,
-  nature: string,
-  technologyStack: string[],
-  workExperience: string,
-  number: string,
-  position: string,
-  salary: number[],
-  address: string,
-  applicationConditions: string,
-  requireCount: number,
-  applicantCount: number,
-  updateTime: Date,
-  createTime: Date,
-  state: boolean
-
-}
 
 
 const currentPage = ref(1)  //当前页
@@ -178,8 +157,8 @@ const handleSizeChange = (val: number) => {
 const handleCurrentChange = (val: number) => {
   startArrayIndex.value = pageSize.value * (val - 1)
   endArrayIndex.value = startArrayIndex.value + pageSize.value
-  if (endArrayIndex.value>=totalSize.value){
-    endArrayIndex.value=totalSize.value
+  if (endArrayIndex.value >= totalSize.value) {
+    endArrayIndex.value = totalSize.value
   }
   // console.log(' startArrayIndex.value', startArrayIndex.value)
   // console.log(' endArrayIndex.value', endArrayIndex.value)
@@ -189,7 +168,7 @@ const handleCurrentChange = (val: number) => {
 
 const dialogVisible = ref(false)  //对话框默认不显示
 // const id = store.state.user.profile.id  //获取id
-let form = reactive<job>({
+let form = reactive<jobList>({
   announcerId: 0,
   education: "",
   firmId: 0,
@@ -198,7 +177,7 @@ let form = reactive<job>({
   workExperience: "",
   number: '',
   position: '',
-  salary: [],
+  salary: [0, 0],
   address: '',
   applicationConditions: ' ',
   requireCount: 0,
@@ -208,16 +187,16 @@ let form = reactive<job>({
   state: true
 })  //临时表单
 const search = ref('')
-let tableData: job[] = reactive([])
+let tableData: jobList[] = reactive([])
 let URL = ref<string>('')
 //数据过滤集
 const filterTableData = computed(() =>
-    tableData.filter(
-        (data) => {
-          // return !search.value || data.name.toLowerCase().includes(search.value.toLowerCase())
-          return !search.value || JSON.stringify(data).toLowerCase().includes(search.value.toLowerCase())
-        }
-    )
+  tableData.filter(
+    (data) => {
+      // return !search.value || data.name.toLowerCase().includes(search.value.toLowerCase())
+      return !search.value || JSON.stringify(data).toLowerCase().includes(search.value.toLowerCase())
+    }
+  )
 )
 
 /*修改组件显示方法*/
@@ -227,8 +206,9 @@ function toggleDialog() {
 
 // 提交
 async function submit() {
-  form.salary = JSON.stringify(form.salary)
-  const result = await postJsonRequest(URL.value, form);
+  let temp = form;
+  temp.salary = JSON.stringify(form.salary)
+  const result = await postJsonRequest(URL.value, temp);
   const arr = result.result;
   //转换为前端数据
   ConvertToFrontData(arr)
@@ -262,25 +242,22 @@ const handleEdit = (index: number, row: { [x: string]: any; }) => {
   for (let rowKey in row) {
     form[rowKey] = row[rowKey]
   }
-  form.technologyStack=form.technologyStack.toString()
+  // form.technologyStack = form.technologyStack.toString()
 
   URL.value = "/jobList/updateJobList"  //修改路径
 }
 // 单个删除
 const handleDelete = (index: number, row: { number: any; announcerId: number }) => {
-  let temp = ref({id: row.announcerId, number: row.number})
-  handleDel(temp) //删除操作,获取数据
-  console.log('arr', arr)
-  ConvertToFrontData(arr) //转换为前端数据
-}
-
-// 删除职位信息
-async function handleDel(param: {}) {
-  const data = await postRequest("/jobList/delJobList", param.value)
-  console.log('data.result.result', data.result.result)
+  let temp = ref({ announcerId: row.announcerId, number: row.number })
+  // handleDel(temp) //删除操作,获取数据
+  // console.log('arr', arr)
+  // ConvertToFrontData(arr) //转换为前端数据
+  const data = postRequest("/jobList/delJobList", temp.value)
+  // console.log('data.result.result', data.result.result)
   const result = data.result.result //获取数据
   ConvertToFrontData(result)
 }
+
 
 async function InitialTableData() {
   const data = await postJsonRequest("/jobList/getJobList", {});
@@ -288,6 +265,9 @@ async function InitialTableData() {
   console.log(arr)
   // tableData.length = 0  //响应式数组清空
   ConvertToFrontData(arr)
+}
+async function InitialOptions() {
+  
 }
 
 onMounted(() => {
