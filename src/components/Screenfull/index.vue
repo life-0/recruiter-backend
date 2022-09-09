@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ElMessage } from "element-plus"
+import { ElMessage } from "element-plus/es"
 import { FullScreen } from "@element-plus/icons-vue"
 import screenfull from "screenfull"
 

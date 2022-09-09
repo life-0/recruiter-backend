@@ -1,6 +1,9 @@
 import { UserConfigExport } from "vite";
 import path, { resolve } from "path";
 import vitePluginImp from "vite-plugin-imp";
+import Components from 'unplugin-vue-components/vite'
+import AutoImport from "unplugin-auto-import/vite"
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import vue from "@vitejs/plugin-vue";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 
@@ -53,26 +56,43 @@ export default (): UserConfigExport => {
       //   }
       // }
     },
+    
     build: {
+      rollupOptions: {
+           //配置入口
+           input: {
+            main: resolve(__dirname, "index.html"),
+        
+        },
+        output: {
+            dir: './dist',
+            chunkFileNames: 'static/js/[name]-[hash].js',
+            entryFileNames: 'static/js/[name]-[hash].js',
+            assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
+        },
+        external: ["/element-plus/es/default"]
+      },
       brotliSize: false,
       /** 消除打包大小超过 500kb 警告 */
-      chunkSizeWarningLimit: 2000,
+      chunkSizeWarningLimit: 10000,
       /** vite 2.6.x 以上需要配置 minify: terser，terserOptions 才能生效 */
       minify: "terser",
       /** 在 build 代码时移除 console.log、debugger 和 注释 */
+      target: 'modules',
       terserOptions: {
         compress: {
-          drop_console: false,
-          drop_debugger: true,
-          pure_funcs: ["console.log"],
+            drop_console: false,
+            drop_debugger: true,
+            pure_funcs: ["console.log"]
         },
         output: {
-          /** 删除注释 */
-          comments: false,
-        },
-      },
-      /** 打包后静态资源目录 */
-      assetsDir: "static",
+            /** 删除注释 */
+            comments: false
+        }
+    },
+    /** 打包后静态资源目录 */
+    assetsDir: "./static"
+    
     },
     /** vite 插件 */
     plugins: [
@@ -84,15 +104,24 @@ export default (): UserConfigExport => {
       }),
       vitePluginImp({
         libList: [
-          // 已配置了全局的element-plus
-          {
-            libName: "element-plus",
-            style: () => {
-              return `element-plus/dist/index.css`;
-            },
-          },
-        ],
-      }),
+            // 已配置了全局的element-plus
+            {
+                libName: "element-plus",
+                style: () => {
+                    return 'element-plus/dist/index.css'
+                }
+            }
+        ]
+    }),
+    AutoImport({
+      /** 自动按需导入 element-plus 相关函数，比如 ElMessage */
+      resolvers: [ElementPlusResolver()],
+
+    }),
+    Components({
+      /** 自动按需导入 element-plus 组件 */
+      resolvers: [ElementPlusResolver()]
+    })
       // AutoImport({
       //   dts: "./types/auto-imports.d.ts",
       //   /** 自动按需导入 element-plus 相关函数，比如 ElMessage */

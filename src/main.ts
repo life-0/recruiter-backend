@@ -3,16 +3,15 @@ import router from "./router/index"
 import "@/router/permission"
 import store from "./store"
 import App from "./App.vue"
-import ElementPlus from "element-plus"
-import "element-plus/dist/index.css"
+// import ElementPlus from "element-plus"
 import loadSvg from "@/icons"
 import * as directives from "@/directives"
 import "@/styles/index.scss"
 import "normalize.css"
-
+  
 const app = createApp(App)
 /** element-plus 组件完整引入 */
-app.use(ElementPlus)
+// app.use(ElementPlus)
 /** 加载全局 svg */
 loadSvg(app)
 /** 自定义指令 */

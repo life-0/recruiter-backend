@@ -1,0 +1,30 @@
+[
+    {
+        "value": "Spring Boot",
+        "label": "Spring Boot"
+    },
+    {
+        "value": "SpringCloud",
+        "label": "SpringCloud"
+    },
+    {
+        "value": "MongoDB",
+        "label": "MongoDB"
+    },
+    {
+        "value": "mybatis",
+        "label": "Mybatis"
+    },
+    {
+        "value": "java",
+        "label": "Java"
+    },
+    {
+        "value": "mysql",
+        "label": "Mysql"
+    },
+    {
+        "value": "github",
+        "label": "github"
+    }
+]

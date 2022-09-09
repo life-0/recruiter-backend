@@ -99,16 +99,9 @@
             </el-col>
             <el-col :span="22" style="margin-bottom: 10px">
               <label style="width:100px;margin-right: 5px">技术栈 :</label>
-              <el-select-v2 v-model="form.technologyStack" filterable :options="options" placeholder="Please select"
-                style="width: 240px" multiple>
-                <template #default="{ item }">
-                  <span style="margin-right: 8px">{{ item.label }}</span>
-                  <span style="color: var(--el-text-color-secondary); font-size: 13px">
-                    {{ item.value }}
-                  </span>
-                </template>
+              <el-select-v2 v-model="form.technologyStack" :options="options" filterable :multiple-limit="5"
+                placeholder="Please select" style="width: 67%" multiple>
               </el-select-v2>
-              <!-- <span>{{ form.technologyStack }}</span> -->
             </el-col>
           </el-form-item>
           <el-form-item style="width: 100%">
@@ -140,6 +133,7 @@ import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue'
 import { postJsonRequest, postRequest } from "@/api";
 import dayjs from "dayjs";
 import { jobList } from "@/store/POJOInterface/jobList"
+import axios from 'axios'
 
 
 
@@ -206,8 +200,8 @@ function toggleDialog() {
 
 // 提交
 async function submit() {
-  let temp = form;
-  temp.salary = JSON.stringify(form.salary)
+  let temp: any = form;
+  temp.salary = JSON.stringify(form.salary) //  转成
   const result = await postJsonRequest(URL.value, temp);
   const arr = result.result;
   //转换为前端数据
@@ -237,11 +231,30 @@ function ConvertToFrontData(arr: any) {
 }
 
 // 单个编辑
-const handleEdit = (index: number, row: { [x: string]: any; }) => {
+const handleEdit = (index: number, row: any) => {
   toggleDialog()
-  for (let rowKey in row) {
-    form[rowKey] = row[rowKey]
-  }
+  // for (let rowKey in row) {
+  //   form[rowKey] = row[rowKey]
+  // }
+  form.number = row.number
+  form.announcerId = row.announcerId
+  form.firmId = row.firmId
+  form.position = row.position
+  form.technologyStack.length=0
+  form.technologyStack.push(...row.technologyStack )
+  form.salary.length = 0
+  form.salary.push(...row.salary)
+  form.address = row.address
+  form.workExperience = row.workExperience
+  form.education = row.education
+  form.requireCount = row.requireCount
+  form.applicantCount = row.applicantCount
+  form.applicationConditions = row.applicationConditions
+  form.nature = row.nature
+  form.state = row.state
+  form.updateTime = row.updateTime
+  form.createTime = row.createTime
+
   // form.technologyStack = form.technologyStack.toString()
 
   URL.value = "/jobList/updateJobList"  //修改路径
@@ -266,12 +279,18 @@ async function InitialTableData() {
   // tableData.length = 0  //响应式数组清空
   ConvertToFrontData(arr)
 }
+
+const options = ref() //初始化选择栏
 async function InitialOptions() {
-  
+  axios.get('/src/mock/technicalPoint.json').then((res) => {
+    console.log('res.data = ', res.data)
+    options.value = res.data
+  })
 }
 
 onMounted(() => {
   InitialTableData()
+  InitialOptions()
 })
 
 </script>

@@ -2,12 +2,13 @@ import router from "@/router"
 import { RouteLocationNormalized } from "vue-router"
 import { useUserStoreHook } from "@/store/modules/user"
 import { usePermissionStoreHook } from "@/store/modules/permission"
-import { ElMessage } from "element-plus"
+// import { ElMessage } from "element-plus"
 import { whiteList } from "@/config/white-list"
 import { getToken } from "@/utils/cookies"
 import asyncRouteSettings from "@/config/async-route"
 import NProgress from "nprogress"
 import "nprogress/nprogress.css"
+import { ElMessage } from "element-plus/es"
 
 const userStore = useUserStoreHook()
 const permissionStore = usePermissionStoreHook()
