@@ -32,4 +32,5 @@ interface jobFavorites {
      */
     createTime: Date;
 }
+
 export default jobFavorites

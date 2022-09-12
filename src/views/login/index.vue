@@ -107,22 +107,22 @@ const state = reactive({
             />
           </el-form-item>
           <!--验证码-->
-<!--          <el-form-item prop="code">-->
-<!--            <el-input-->
-<!--                v-model="state.loginForm.code"-->
-<!--                placeholder="验证码"-->
-<!--                type="text"-->
-<!--                tabindex="3"-->
-<!--                :prefix-icon="Key"-->
-<!--                maxlength="4"-->
-<!--                size="large"-->
-<!--            />-->
-<!--         -->
-<!--                        <span class="show-code">-->
-<!--                          <img :src="state.codeUrl" @click="state.createCode" />-->
-<!--                        </span>-->
-<!--         -->
-<!--          </el-form-item>-->
+          <!--          <el-form-item prop="code">-->
+          <!--            <el-input-->
+          <!--                v-model="state.loginForm.code"-->
+          <!--                placeholder="验证码"-->
+          <!--                type="text"-->
+          <!--                tabindex="3"-->
+          <!--                :prefix-icon="Key"-->
+          <!--                maxlength="4"-->
+          <!--                size="large"-->
+          <!--            />-->
+          <!--         -->
+          <!--                        <span class="show-code">-->
+          <!--                          <img :src="state.codeUrl" @click="state.createCode" />-->
+          <!--                        </span>-->
+          <!--         -->
+          <!--          </el-form-item>-->
           <!--验证码 end-->
           <el-button :loading="state.loading" type="primary" size="large" @click.prevent="state.handleLogin">
             登 录

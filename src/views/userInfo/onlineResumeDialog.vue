@@ -96,7 +96,7 @@
           </div>
           <ul class="" style=" overflow: hidden;white-space: pre-wrap; ">
             <li class="wanna-title__item"
-              style="float: left;font-size: 14px; width: 100%; color: #000000; line-height: 24px;margin-top: 10px">
+                style="float: left;font-size: 14px; width: 100%; color: #000000; line-height: 24px;margin-top: 10px">
               {{ resumeInfo.jobHuntingInfo.professionalSkill }}
             </li>
 
@@ -109,7 +109,7 @@
           </div>
           <ul class="" style=" overflow: hidden; white-space: pre-wrap;">
             <li class="wanna-title__item"
-              style="float: left;font-size: 14px; width: 100%; color: #000000; line-height: 24px;margin-top: 10px">
+                style="float: left;font-size: 14px; width: 100%; color: #000000; line-height: 24px;margin-top: 10px">
               {{ resumeInfo.jobHuntingInfo.works }}
             </li>
 
@@ -120,7 +120,8 @@
     <el-row>
       <el-col :span="23" style="margin-top: 10px;display: flex; flex-wrap: wrap; justify-content: center;">
         <el-button>取消</el-button>
-        <el-button type="primary" @click="exportPDF(resumeInfo.jobHuntingInfo.position + '_' + resumeInfo.userInfo.name)">
+        <el-button type="primary"
+                   @click="exportPDF(resumeInfo.jobHuntingInfo.position + '_' + resumeInfo.userInfo.name)">
           导出PDF
         </el-button>
       </el-col>
@@ -130,8 +131,8 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, reactive, ref, watch } from "vue";
-import { getPdf } from '@/utils/htmlToPdf.js'
+import {nextTick, onMounted, reactive, ref, watch} from "vue";
+import {getPdf} from '@/utils/htmlToPdf.js'
 import dayjs from 'dayjs'
 
 const resumeDialogVisible = ref(false)  //简历展示框 默认不显示

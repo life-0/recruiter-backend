@@ -14,7 +14,7 @@
                 <span style=" list-style: none; overflow: hidden;  background: #e7e7e7; border-radius: 2px;
                               padding: 5px 10px; font-size: 12px;
                               color: #000000;margin-right: 10px; margin-top: 5px;"
-                  v-if="props.row.technologyStack != null" v-for="value in props.row.technologyStack">
+                      v-if="props.row.technologyStack != null" v-for="value in props.row.technologyStack">
                   {{ value }}
                 </span>
               </div>
@@ -23,7 +23,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="职位" prop="position" />
+        <el-table-column label="职位" prop="position"/>
         <el-table-column label="薪资">
           <template #default="props">
             <span v-for="(item, index) in  props.row.salary">
@@ -32,7 +32,7 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column label="地址" prop="address" />
+        <el-table-column label="地址" prop="address"/>
         <el-table-column label="是否发布" prop="state">
           <template #default="scope">
             <span v-if='scope.row.state'>是</span>
@@ -41,7 +41,7 @@
         </el-table-column>
         <el-table-column align="right" style="">
           <template #header>
-            <el-input v-model="search" size="default" placeholder="数据搜索" />
+            <el-input v-model="search" size="default" placeholder="数据搜索"/>
           </template>
           <template #default="scope">
             <el-button size="default" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -55,8 +55,9 @@
     <el-row style=" flex-wrap: wrap; justify-content: center;">
       <div style="margin-top: -10px">
         <el-pagination v-model:currentPage="currentPage" :page-size="pageSize" :pager-count="pagerCount"
-          :disabled="disabled" :background="background" hide-on-single-page layout="prev, pager, next, jumper"
-          :total="totalSize" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+                       :disabled="disabled" :background="background" hide-on-single-page
+                       layout="prev, pager, next, jumper"
+                       :total="totalSize" @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
       </div>
     </el-row>
     <!--分页 end-->
@@ -68,23 +69,23 @@
           <el-form-item>
             <el-col :span="11" style="margin-bottom: 10px">
               <label style="width:65px;margin-right: 5px">职位 :</label>
-              <el-input v-model="form.position" style="width: auto" />
+              <el-input v-model="form.position" style="width: auto"/>
             </el-col>
             <el-col :span="11" style="margin-bottom: 10px">
               <label style="width:65px;margin-right: 5px">公司地址 :</label>
-              <el-input v-model="form.address" style="width: auto" />
+              <el-input v-model="form.address" style="width: auto"/>
             </el-col>
             <el-col :span="16" style="margin-bottom: 10px">
               <label style="width:65px;margin-right: 5px">薪资 :</label>
-              <el-input v-model="form.salary[0]" style="width: 26%" />
+              <el-input v-model="form.salary[0]" style="width: 26%"/>
               <span class="text-gray-500"> -- </span>
-              <el-input v-model="form.salary[1]" style="width: 26%" />
+              <el-input v-model="form.salary[1]" style="width: 26%"/>
               <span class="text-gray-500"> / 月</span>
             </el-col>
             <el-col :span="6" style="margin-bottom: 10px"></el-col>
             <el-col :span="6" style="margin-bottom: 10px">
               <label style="width:65px;margin-right: 5px">需求人数 :</label>
-              <el-input v-model="form.requireCount" style="width: 30%" />
+              <el-input v-model="form.requireCount" style="width: 30%"/>
             </el-col>
             <el-col :span="8" style="margin-bottom: 10px">
               <label style="width:100px;margin-right: 5px">目前申请人数 :</label>
@@ -100,7 +101,7 @@
             <el-col :span="22" style="margin-bottom: 10px">
               <label style="width:100px;margin-right: 5px">技术栈 :</label>
               <el-select-v2 v-model="form.technologyStack" :options="options" filterable :multiple-limit="5"
-                placeholder="Please select" style="width: 67%" multiple>
+                            placeholder="Please select" style="width: 67%" multiple>
               </el-select-v2>
             </el-col>
           </el-form-item>
@@ -108,7 +109,7 @@
             <el-col :span="23" style="margin-bottom: 10px">
               <label style="width:65px;margin-right: 5px">应聘条件 :</label>
               <el-input v-model="form.applicationConditions" :autosize="{ minRows: 4, maxRows: 8 }" type="textarea"
-                placeholder="Please input" />
+                        placeholder="Please input"/>
             </el-col>
 
           </el-form-item>
@@ -129,12 +130,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue'
-import { postJsonRequest, postRequest } from "@/api";
+import {computed, nextTick, onMounted, reactive, ref, watch} from 'vue'
+import {postJsonRequest, postRequest} from "@/api";
 import dayjs from "dayjs";
-import { jobList } from "@/store/POJOInterface/jobList"
+import {jobList} from "@/store/POJOInterface/jobList"
 import axios from 'axios'
-
 
 
 const currentPage = ref(1)  //当前页
@@ -185,12 +185,12 @@ let tableData: jobList[] = reactive([])
 let URL = ref<string>('')
 //数据过滤集
 const filterTableData = computed(() =>
-  tableData.filter(
-    (data) => {
-      // return !search.value || data.name.toLowerCase().includes(search.value.toLowerCase())
-      return !search.value || JSON.stringify(data).toLowerCase().includes(search.value.toLowerCase())
-    }
-  )
+    tableData.filter(
+        (data) => {
+          // return !search.value || data.name.toLowerCase().includes(search.value.toLowerCase())
+          return !search.value || JSON.stringify(data).toLowerCase().includes(search.value.toLowerCase())
+        }
+    )
 )
 
 /*修改组件显示方法*/
@@ -240,8 +240,8 @@ const handleEdit = (index: number, row: any) => {
   form.announcerId = row.announcerId
   form.firmId = row.firmId
   form.position = row.position
-  form.technologyStack.length=0
-  form.technologyStack.push(...row.technologyStack )
+  form.technologyStack.length = 0
+  form.technologyStack.push(...row.technologyStack)
   form.salary.length = 0
   form.salary.push(...row.salary)
   form.address = row.address
@@ -261,7 +261,7 @@ const handleEdit = (index: number, row: any) => {
 }
 // 单个删除
 const handleDelete = (index: number, row: { number: any; announcerId: number }) => {
-  let temp = ref({ announcerId: row.announcerId, number: row.number })
+  let temp = ref({announcerId: row.announcerId, number: row.number})
   // handleDel(temp) //删除操作,获取数据
   // console.log('arr', arr)
   // ConvertToFrontData(arr) //转换为前端数据

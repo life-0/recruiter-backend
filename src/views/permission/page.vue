@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { useRouter } from "vue-router"
+import {useRouter} from "vue-router"
 import SwitchRoles from "./components/SwitchRoles.vue"
 
 const router = useRouter()
 
 const handleRolesChange = () => {
-  router.push({ path: "/401" }).catch((err) => {
+  router.push({path: "/401"}).catch((err) => {
     console.warn(err)
   })
 }
@@ -14,6 +14,6 @@ const handleRolesChange = () => {
 <template>
   <div class="app-container">
     <el-tag type="success" size="large" style="margin-bottom: 15px"> 当前页面只有 admin 权限可见 test</el-tag>
-    <SwitchRoles @change="handleRolesChange" />
+    <SwitchRoles @change="handleRolesChange"/>
   </div>
 </template>

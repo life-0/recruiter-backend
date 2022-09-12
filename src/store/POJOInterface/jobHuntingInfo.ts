@@ -60,7 +60,7 @@ export interface jobHuntingInfo {
     /**
      * 学年
      */
-    academicYear?: Date[] |any
+    academicYear?: Date[] | any
 
     /**
      * 附件路径

@@ -151,34 +151,34 @@ export const constantRoutes: Array<RouteRecordRaw> = [
             }
         ]
     },
-   {
-           path: "/test",
-           component: Layout,
-           redirect: "/test1",
-           children: [
-               {
-                   path: "test1",
-                   component: () => import("@/views/example/test1.vue"),
-                   name: "test1",
-                   meta: {
-                       title: "测试用例1",
-                       icon: "dashboard",
-                       affix: true
-                   }
-               },
-			   {
-			       path: "test2",
-			       component: () => import("@/views/example/test2.vue"),
-			       name: "test2",
-			       meta: {
-			           title: "测试用例2",
-			           icon: "dashboard",
-			           affix: true
-			       }
-			   }
-           ]
-       }
-   ]
+    {
+        path: "/test",
+        component: Layout,
+        redirect: "/test1",
+        children: [
+            {
+                path: "test1",
+                component: () => import("@/views/example/test1.vue"),
+                name: "test1",
+                meta: {
+                    title: "测试用例1",
+                    icon: "dashboard",
+                    affix: true
+                }
+            },
+            {
+                path: "test2",
+                component: () => import("@/views/example/test2.vue"),
+                name: "test2",
+                meta: {
+                    title: "测试用例2",
+                    icon: "dashboard",
+                    affix: true
+                }
+            }
+        ]
+    }
+]
 
 /**
  * 动态路由

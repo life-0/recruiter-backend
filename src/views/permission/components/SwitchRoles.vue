@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { computed, ref, watch } from "vue"
-import { useUserStore } from "@/store/modules/user"
+import {computed, ref, watch} from "vue"
+import {useUserStore} from "@/store/modules/user"
 
 const userStore = useUserStore()
 
@@ -20,8 +20,8 @@ watch(currentRole, async (value) => {
     <div style="display: flex; align-items: center">
       <span>切换权限：</span>
       <el-radio-group v-model="currentRole">
-        <el-radio-button label="editor" />
-        <el-radio-button label="admin" />
+        <el-radio-button label="editor"/>
+        <el-radio-button label="admin"/>
       </el-radio-group>
     </div>
   </div>
