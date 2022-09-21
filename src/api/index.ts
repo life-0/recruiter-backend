@@ -6,7 +6,7 @@ export const postJsonRequest = (url: string, data: any) => api.jsonPost('/api' +
 
 export const getFileDownload = (url: string, data: any) => api.fileDownloadGet('/api' + url, data)
 export const postFileDownload = (url: string, data: any) => api.fileDownloadPost('/api' + url, data)
-export const mutilFilesDownload = (data: any) => api.mutliFilesDownloadPost(data)
+export const multiFilesDownload = (data: any) => api.multipleFileDownloadInstance(data)
 
 export const getFileUpload = (url: string, data: any) => api.fileUploadGet('/api' + url, data)
 export const postFileUpload = (url: string, data: any) => api.fileUploadPost('/api' + url, data)

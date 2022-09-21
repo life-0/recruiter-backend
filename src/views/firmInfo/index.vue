@@ -184,7 +184,7 @@
 
 <script setup lang="ts">
 import {computed, onMounted, reactive, ref} from 'vue'
-import {postJsonRequest, postRequest, postFileDownload, mutilFilesDownload} from "@/api";
+import {postJsonRequest, postRequest, postFileDownload, multiFilesDownload} from "@/api";
 import dayjs from "dayjs";
 import {ElNotification} from "element-plus/es";
 import {jobList} from "@/store/POJOInterface/jobList";
@@ -277,29 +277,28 @@ async function ConvertToFrontData(arr: any) {
   // console.log('ConvertToFrontDataArr', arr)
 
   arr.forEach((value: any) => {
-    value.updateTime = new Date(value.updateTime)
-    value.createTime = new Date(value.createTime)
-    value.welfare = value.welfare.split(",");
-    console.log("firmId", value.firmId);
-    console.log("firmAvatar", value.firmAvatar);
-    mutilFilesDownload(
-        {
-          url: '/file/downloadFile',
-          data: {
+        value.updateTime = new Date(value.updateTime)
+        value.createTime = new Date(value.createTime)
+        value.welfare = value.welfare.split(",");
+        console.log("firmId", value.firmId);
+        console.log("firmAvatar", value.firmAvatar);
+        multiFilesDownload({
+          url: '/file/downloadFile', data: {
             id: value.firmId,
             fileName: value.firmAvatar
           }
-        }).then((response: { data: BlobPart, status: number }) => {
-      // const blob = new Blob([response]);//处理文档流
-      let imgBlob = new Blob([response.data]); //处理文档流
-      value.firmAvatar = window.URL.createObjectURL(imgBlob)
-      console.log("imgBlob", value.firmAvatar, response.data);
-    });
-    // console.log('arrKey', value)
-  })
+        }).then((response: BlobPart) => {
+          // const blob = new Blob([response]);//处理文档流
+          let imgBlob = new Blob([response]); //处理文档流
+          value.firmAvatar = window.URL.createObjectURL(imgBlob)
+          console.log("imgBlob", value.firmAvatar, response);
+        });
+        // console.log('arrKey', value)
+      }
+  )
   console.log("arr after", arr)
   tableData.push(...arr)
-  //初始化分页数据
+//初始化分页数据
   totalSize.value = tableData.length
 }
 

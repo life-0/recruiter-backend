@@ -28,7 +28,7 @@ import {
 import * as PdfJS from "pdfjs-dist/legacy/build/pdf"; // 引入PDFJS
 import pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
 import axios from 'axios';
-import {postFileDownload, postRequest, mutilFilesDownload} from "@/api";
+import {postFileDownload, postRequest, multiFilesDownload, multiFilesDownload} from "@/api";
 import qs from 'qs';
 
 
@@ -62,7 +62,7 @@ const dataList: any = reactive([{
   url: "/file/downloadFile",
   data: {
     id: "3",
-    fileName: "/firmAvatar/img_3.png"
+    fileName: "/firmAvatar/img_2.png"
   }
 }]);
 
@@ -80,7 +80,7 @@ test.defaults.transformRequest = [
 ];
 
 async function print(data: any) {
-  const response = await mutilFilesDownload(data);
+  const response = await multiFilesDownload(data);
 
   let PDFBlob = new Blob([response]); //处理文档流
   let pdfUrl = window.URL.createObjectURL(PDFBlob)

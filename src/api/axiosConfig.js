@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
+import {multiFilesDownload} from "@/api/index";
 
 let api_base_url = ''
 // vite
@@ -223,7 +224,7 @@ fileDownloadInstance.interceptors.request.use(
         })
         //阻止重复请求
         stopRepeatRequest(requestList, config.url, cancelFn, `不要连续请求：${config.url}，速度太快了`)
-        // {url: "/slides", method: "get", headers: {…}, baseURL: "http://api.hzwlb.org", transformRequest: Array(1), responseType: "json",…}
+        // {url: "/slides", method:` "get", headers: {…}, baseURL: "http://api.hzwlb.org", transformRequest: Array(1), responseType: "json",…}
         return config
     },
     error => {
@@ -291,7 +292,7 @@ api.fileDownloadPost = function (url, data) {
     })
 }
 
-let mutlifileDownloadInstance = axios.create({
+let multipleFileDownloadInstance = axios.create({
 
     // baseURL: api_base_url,
     // responseType: 'blob' //接收返回的类型
@@ -305,15 +306,69 @@ let mutlifileDownloadInstance = axios.create({
     // }
 
 })
-mutlifileDownloadInstance.defaults.transformRequest = [
+multipleFileDownloadInstance.interceptors.request.use(
+    config => {
+        // 每次发送请求之前判断vuex中是否存在token
+        // 如果存在，则统一在http请求的header都加上token，这样后台根据token判断你的登录情况
+        // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
+        config.headers.BASE_TOKEN = localStorage.getItem('token')
+        // 设置cancelToken
+        let cancelFn = null;
+        config.cancelToken = new axios.CancelToken(function (c) {
+            cancelFn = c
+        })
+        //阻止重复请求
+        // stopRepeatRequest(requestList, config.url, cancelFn, `不要连续请求：${config.url}，速度太快了`)
+        // {url: "/slides", method:` "get", headers: {…}, baseURL: "http://api.hzwlb.org", transformRequest: Array(1), responseType: "json",…}
+        return config
+    },
+    error => {
+        // Message.error({ message: '请求超时!' })
+        // console.log('请求超时！');
+        return Promise.reject(error)
+    }
+)
+
+multipleFileDownloadInstance.defaults.transformRequest = [
     data => {
         // 转换成name=XX&age=XX格式 可对应后端的 @RequestParam
         return qs.stringify(data)
     }
 ]
+multipleFileDownloadInstance.interceptors.response.use(
+    response => {
+        //不得重复发送
+        setTimeout(() => {
+            allowRequest(requestList, response.config.url), 1500
+        })
+        // {data: {…}, status: 200, statusText: "OK", headers: {…}, config: {…}, request:{…}}
+        let data = response.data //响应的数据部分(服务器返回部分)
+        let status = response.status //标准状态码
+        if (status === 200) { //如果响应正常则放行 数据
+            return Promise.resolve(data)
+        } else if (status >= 400 && status <= 499) {
+            // Message.error({ message: '客户端请求错误!' })
+            console.log('客户端请求错误码：', status);
+        } else {
+            //其他错误
+            // Message.error({ message: response.statusText })
+            // console.log('服务器错误,错误码：', status);
+            // return Promise.reject(response)
+            if (axios.isCancel(thrown)) {
+                console.log(thrown.message);
+            } else {
+                return Promise.reject(response)
+            }
+        }
+    },
+    error => {
+        console.log('响应错误信息：')
+        console.log(error.message)
+    }
+)
 
-api.mutliFilesDownloadPost = function (data) {
-    return mutlifileDownloadInstance
+api.multipleFileDownloadInstance = function (data) {
+    return multipleFileDownloadInstance
         .post("/api" + data.url, data.data)
 
 }
