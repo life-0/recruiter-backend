@@ -289,7 +289,7 @@ async function ConvertToFrontData(arr: any) {
           }
         }).then((response: BlobPart) => {
           // const blob = new Blob([response]);//处理文档流
-          let imgBlob = new Blob([response]); //处理文档流
+          let imgBlob = new Blob([response]); //处理文档流pnpm
           value.firmAvatar = window.URL.createObjectURL(imgBlob)
           console.log("imgBlob", value.firmAvatar, response);
         });

@@ -155,6 +155,10 @@ export const constantRoutes: Array<RouteRecordRaw> = [
         path: "/test",
         component: Layout,
         redirect: "/test1",
+        meta: {
+            title: "测试用例",
+            icon: "menu"
+        },
         children: [
             {
                 path: "test1",

@@ -1,7 +1,7 @@
 <template>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
 // const axios = require('axios');
 const GitHubClient = axios.create({
@@ -23,7 +23,7 @@ async function getMostFollowedUsers() {
   return response.data.items;
 }
 
-async function getCounts(username) {
+async function getCounts(username: string) {
   const response = await GitHubClient.get(`users/${username}`);
   return {
     username,
@@ -36,7 +36,7 @@ async function getCounts(username) {
 (async () => {
   try {
     const mostFollowedUsers = await getMostFollowedUsers();
-    const popularUsernames = mostFollowedUsers.map(user => user.login);
+    const popularUsernames = mostFollowedUsers.map((user: { login: any; }) => user.login);
     const popularUsersWithPublicRepoCount = await Promise.all(popularUsernames.map(getCounts));
     console.table(popularUsersWithPublicRepoCount);
 
@@ -46,7 +46,7 @@ async function getCounts(username) {
           `${userWithPublicRepos.name} with username ${userWithPublicRepos.username} has ${userWithPublicRepos.publicReposCount} public repos and ${userWithPublicRepos.followersCount} followers on GitHub`
       );
     });
-  } catch (error) {
+  } catch (error:any) {
     console.log(`Error calling GitHub API: ${error.message}`, error);
   }
 })();

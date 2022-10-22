@@ -28,7 +28,7 @@ import {
 import * as PdfJS from "pdfjs-dist/legacy/build/pdf"; // 引入PDFJS
 import pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
 import axios from 'axios';
-import {postFileDownload, postRequest, multiFilesDownload, multiFilesDownload} from "@/api";
+import {postFileDownload, postRequest, multiFilesDownload} from "@/api";
 import qs from 'qs';
 
 

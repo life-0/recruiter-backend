@@ -3,7 +3,7 @@
     <!--职位展示-->
     <el-scrollbar height="580px">
       <el-table :data="filterTableData.slice(startArrayIndex, endArrayIndex)" row-key="userInfo.number"
-        :expand-row-keys="appointExpandRow" @row-click="switchRows" style="width: 100%">
+                :expand-row-keys="appointExpandRow" @row-click="switchRows" style="width: 100%">
         <el-table-column type="expand">
           <template #default="props">
             <!--个人信息框-->
@@ -17,11 +17,11 @@
                     <!--@click="toggleDialog('userVisible')"-->
                     编辑
                     <el-icon>
-                      <i-edit />
+                      <i-edit/>
                     </el-icon>
                   </span>
                   <ul class="wanna-title__list"
-                    style="display: flex;
+                      style="display: flex;
                                     flex-wrap: wrap; justify-content: center;  margin-top: 16px; overflow: hidden; list-style: none; ">
                     <li class="wanna-title__item" style="float: left;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
@@ -74,11 +74,11 @@
                   <span style="font-size: 16px;;float:right;margin-right: 10px" @click="toggleDialog()">
                     编辑
                     <el-icon>
-                      <i-edit />
+                      <i-edit/>
                     </el-icon>
                   </span>
                   <ul class="wanna-title__list"
-                    style="display: flex;
+                      style="display: flex;
                                     flex-wrap: wrap; justify-content: center;  margin-top: 16px; overflow: hidden; list-style: none; ">
                     <li class="wanna-title__item" style="float: left; font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
@@ -95,7 +95,7 @@
                       薪资要求:
                       <span>{{ props.row.jobHuntingInfo.salaryMin }} - {{
                           props.row.jobHuntingInfo.salaryMax
-                      }} 元/月</span>
+                        }} 元/月</span>
                     </li>
                     <li class="wanna-title__item" style="float: left;;font-size: 14px; width: 50%;
                                           color: #666; line-height: 24px;">
@@ -165,9 +165,9 @@
             </el-row>
           </template>
         </el-table-column>
-        <el-table-column label="id" prop="userInfo.id" />
-        <el-table-column label="number" prop="userInfo.number" />
-        <el-table-column label="姓名" prop="userInfo.name" />
+        <el-table-column label="id" prop="userInfo.id"/>
+        <el-table-column label="number" prop="userInfo.number"/>
+        <el-table-column label="姓名" prop="userInfo.name"/>
         <el-table-column label="是否有效" prop="userInfo.state">
           <template #default="scope">
             <span v-if='scope.row.userInfo.state'>是</span>
@@ -182,14 +182,14 @@
             </el-button>
             <!--离线简历按钮-->
             <el-button size="small" style="margin-top:5px;margin-left:0"
-              @click="offlineCVButton(scope.$index, scope.row)">
+                       @click="offlineCVButton(scope.$index, scope.row)">
               附件简历查看
             </el-button>
           </template>
         </el-table-column>
         <el-table-column align="right" style="">
           <template #header>
-            <el-input v-model="search" size="default" placeholder="数据搜索" />
+            <el-input v-model="search" size="default" placeholder="数据搜索"/>
           </template>
           <template #default="scope">
             <el-button size="default" @click="handleEditState(scope.$index, scope.row.userInfo)">状态设置</el-button>
@@ -204,8 +204,9 @@
     <el-row>
       <div class="demo-pagination-block" style="width: 100%;display: flex; flex-wrap: wrap; justify-content: center;">
         <el-pagination v-model:currentPage="currentPage" v-model:page-size="pageSize" :pager-count="pagerCount"
-          :disabled="disabled" :background="background" hide-on-single-page layout="prev, pager, next, jumper"
-          :total="totalSize" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+                       :disabled="disabled" :background="background" hide-on-single-page
+                       layout="prev, pager, next, jumper"
+                       :total="totalSize" @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
       </div>
     </el-row>
     <!--分页 end-->
@@ -244,10 +245,10 @@
 import OfflineResumeDialog from './offlineResumeDialog.vue'
 import OnlineResumeDialog from './onlineResumeDialog.vue'
 
-import { computed, onMounted, reactive, ref } from 'vue'
-import { postJsonRequest, postRequest } from "@/api";
+import {computed, onMounted, reactive, ref} from 'vue'
+import {postJsonRequest, postRequest} from "@/api";
 import dayjs from "dayjs";
-import { ElNotification } from "element-plus";
+import {ElNotification} from "element-plus/es";
 
 interface userTotalInfo {
   userInfo: {
@@ -381,12 +382,12 @@ let tableData: userTotalInfo[] = reactive([])
 let URL = ref<string>('')
 //数据过滤集
 const filterTableData = computed(() =>
-  tableData.filter(
-    (data) => {
-      // return !search.value || data.name.toLowerCase().includes(search.value.toLowerCase())
-      return !search.value || JSON.stringify(data).toLowerCase().includes(search.value.toLowerCase())
-    }
-  )
+    tableData.filter(
+        (data) => {
+          // return !search.value || data.name.toLowerCase().includes(search.value.toLowerCase())
+          return !search.value || JSON.stringify(data).toLowerCase().includes(search.value.toLowerCase())
+        }
+    )
 )
 //打开或关闭某一行
 let appointExpandRow: any = reactive([])//指定展开的行
@@ -500,7 +501,7 @@ async function submitUserInfoResult() {
 
 //初始化数据
 async function InitialTableData() {
-  const data = await postJsonRequest("/resumeDelivery/getUserInfoJobHuntingInfo", {});
+  const data = await postJsonRequest("/userInfo/getUserInfoJobHuntingInfo", {});
   //  const data = await postJsonRequest("/firm/getFirmInfo", {});
   const arr = data.result //获取数据
   // console.log("arr",arr)
@@ -516,7 +517,7 @@ const resumeView = (index: number, row: { jobHuntingInfo: any; userInfo: any; })
   form.jobHuntingInfo = row.jobHuntingInfo
   form.userInfo = row.userInfo
   console.log('resumeInfo.resumeDelivery.isOnlineResume', form.resumeDelivery.isOnlineResume,
-    typeof form.resumeDelivery.isOnlineResume)
+      typeof form.resumeDelivery.isOnlineResume)
   openOnlineResumeDialogRef.value.openOnlineResumeDialog()  //打开组件,并初始化简历数据
   // console.log('resumeViewRow:', row)
   console.log('FatherResumeInfo', form)
